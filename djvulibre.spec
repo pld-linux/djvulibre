@@ -6,7 +6,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	510e834a0e733a5b91e8c14db76fa849
+# Source0-md5:	4adeb92beb8295aa330b9c6b042ba02d
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
 URL:		http://djvu.sourceforge.net/
