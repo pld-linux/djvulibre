@@ -18,10 +18,8 @@ BuildRequires:	qt-devel >= 3.0.5
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_xbindir	/usr/X11R6/bin
-%define		_xmandir	/usr/X11R6/man
-%define		mozdir		/usr/X11R6/lib/mozilla/plugins
-%define		nsdir		/usr/X11R6/lib/netscape/plugins
+%define		mozdir		/usr/lib/mozilla/plugins
+%define		nsdir		/usr/lib/netscape/plugins
 
 %description
 DjVu is a web-centric format and software platform for distributing
@@ -123,8 +121,8 @@ Wtyczka DjVu do Netscape.
 %build
 %{__aclocal}
 %{__autoconf}
-# there seems to be aliasing problem at libdjvu/BSByteStream.cpp:356-357
-# (bug in code or gcc) - happens at least with "-O2 -march=athlon"
+# there are aliasing violations at least at libdjvu/BSByteStream.cpp:356-357,
+# so -fno-strict-aliasing must be passed
 CXXFLAGS="%{rpmcflags} -fno-strict-aliasing"
 %configure
 
@@ -133,15 +131,10 @@ CXXFLAGS="%{rpmcflags} -fno-strict-aliasing"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_xbindir},%{_xmandir}/man1,%{mozdir},%{nsdir}}
+install -d $RPM_BUILD_ROOT{%{mozdir},%{nsdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-mv -f $RPM_BUILD_ROOT%{_bindir}/djview \
-	$RPM_BUILD_ROOT%{_xbindir}
-mv -f $RPM_BUILD_ROOT%{_mandir}/man1/djview.1 \
-	$RPM_BUILD_ROOT%{_xmandir}/man1
 
 mv -f $RPM_BUILD_ROOT%{_libdir}/netscape/plugins/nsdejavu.so \
 	$RPM_BUILD_ROOT%{mozdir}
@@ -156,9 +149,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYRIGHT NEWS README TODO doc/*
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/[!d]*
+%attr(755,root,root) %{_bindir}/d[!j]*
+%attr(755,root,root) %{_bindir}/djv[!i]*
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_mandir}/man1/*
+%{_mandir}/man1/[!d]*
+%{_mandir}/man1/d[!j]*
+%{_mandir}/man1/djv[!i]*
 %dir %{_datadir}/djvu
 %{_datadir}/djvu/languages.xml
 %dir %{_datadir}/djvu/osi
@@ -170,8 +167,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files djview
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_xbindir}/djview
-%{_xmandir}/man1/djview.1*
+%attr(755,root,root) %{_bindir}/djview
+%{_mandir}/man1/djview.1*
 
 %files -n mozilla-plugin-%{name}
 %defattr(644,root,root,755)
