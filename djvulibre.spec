@@ -119,7 +119,7 @@ Wtyczka DjVu do Netscape.
 %patch1 -p1
 
 %build
-aclocal
+%{__aclocal}
 %{__autoconf}
 %configure
 
