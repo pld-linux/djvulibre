@@ -1,14 +1,15 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
-Version:	3.5.12
-Release:	3
+Version:	3.5.13
+Release:	1
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	4adeb92beb8295aa330b9c6b042ba02d
+# Source0-md5:	75b53200c89b0ce2aff8a74aaaae0484
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
+Patch2:		%{name}-desktop.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -116,6 +117,7 @@ Wtyczka DjVu do Netscape.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config
@@ -139,6 +141,11 @@ mv -f $RPM_BUILD_ROOT%{_libdir}/netscape/plugins/nsdejavu.so \
 	$RPM_BUILD_ROOT%{mozdir}
 cp -f $RPM_BUILD_ROOT%{mozdir}/nsdejavu.so $RPM_BUILD_ROOT%{nsdir}
 
+# make desktop-file-install is too environment-dependent
+cd gui/desktop
+install -D hi48-mimetype-djvu.png $RPM_BUILD_ROOT%{_pixmapsdir}/djvu.png
+install -D djview.desktop $RPM_BUILD_ROOT%{_desktopdir}/djview.desktop
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -152,26 +159,35 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/d[!j]*
 %attr(755,root,root) %{_bindir}/djv[!i]*
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_mandir}/man1/[!d]*
+%{_mandir}/man1/[!dn]*
 %{_mandir}/man1/d[!j]*
 %{_mandir}/man1/djv[!i]*
+%lang(ja) %{_mandir}/ja/man1/[!dn]*
+%lang(ja) %{_mandir}/ja/man1/d[!j]*
+%lang(ja) %{_mandir}/ja/man1/djv[!i]*
 %dir %{_datadir}/djvu
 %{_datadir}/djvu/languages.xml
 %dir %{_datadir}/djvu/osi
-%lang(zh) %{_datadir}/djvu/osi/Chinese_PRC
-%lang(de) %{_datadir}/djvu/osi/de_DE
+%lang(de) %{_datadir}/djvu/osi/de
 %{_datadir}/djvu/osi/en
-%lang(fr) %{_datadir}/djvu/osi/fr_FR
-%lang(ja) %{_datadir}/djvu/osi/ja_JP
+%lang(fr) %{_datadir}/djvu/osi/fr
+%lang(ja) %{_datadir}/djvu/osi/ja
+%lang(zh) %{_datadir}/djvu/osi/zh
+%{_datadir}/djvu/pubtext
 
 %files djview
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/djview
 %{_mandir}/man1/djview.1*
+%lang(ja) %{_mandir}/ja/man1/djview.1*
+%{_desktopdir}/djview.desktop
+%{_pixmapsdir}/djvu.png
 
 %files -n mozilla-plugin-%{name}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{mozdir}/*.so
+%{_mandir}/man1/nsdejavu.1*
+%lang(ja) %{_mandir}/ja/man1/nsdejavu.1*
 
 %files -n netscape-plugin-%{name}
 %defattr(644,root,root,755)
