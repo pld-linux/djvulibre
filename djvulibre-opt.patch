@@ -1,0 +1,39 @@
+--- djvulibre-3.5.5/config/acinclude.m4.orig	Thu Mar 21 17:43:46 2002
++++ djvulibre-3.5.5/config/acinclude.m4	Sat May 18 01:03:33 2002
+@@ -58,36 +58,6 @@
+         [ac_debug=$enableval],[ac_debug=no])
+    OPTS=
+    AC_SUBST(OPTS)
+-   saved_CXXFLAGS="$CXXFLAGS"
+-   saved_CFLAGS="$CFLAGS"
+-   CXXFLAGS=
+-   CFLAGS=
+-   for opt in $saved_CXXFLAGS ; do
+-     case $opt in
+-       -g*) test $ac_debug != no && OPTS="$OPTS $opt" ;;
+-       -O*) ;;
+-       *) CXXFLAGS="$CXXFLAGS $opt" ;;
+-     esac
+-   done
+-   for opt in $saved_CFLAGS ; do
+-     case $opt in
+-       -O*|-g*) ;;
+-       *) CFLAGS="$CFLAGS $opt" ;;
+-     esac
+-   done
+-   if test $ac_debug = no ; then
+-     OPTS=-DNO_DEBUG
+-     AC_CHECK_CXX_OPT([-Wall],[OPTS="$OPTS -Wall"])
+-     AC_CHECK_CXX_OPT([-O3],[OPTS="$OPTS -O3"],
+-        [ AC_CHECK_CXX_OPT([-O2], [OPTS="$OPTS -O2"] ) ] )
+-     AC_CHECK_CXX_OPT([-funroll-loops], [OPTS="$OPTS -funroll-loops"])
+-     case "${host_cpu}" in
+-        i?86)
+-           opt="-mcpu=${host_cpu}"
+-           AC_CHECK_CXX_OPT([$opt], [OPTS="$OPTS $opt"])
+-           ;;
+-      esac
+-   fi
+    case x"$ac_debug" in
+      x[0-9])  OPTS="$OPTS -DDEBUGLVL=$ac_debug" ;;
+      xr*)   OPTS="$OPTS -DRUNTIME_DEBUG_ONLY" ;;
