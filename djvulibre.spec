@@ -18,8 +18,8 @@ BuildRequires:	qt-devel >= 3.0.5
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		mozdir		/usr/lib/mozilla/plugins
-%define		nsdir		/usr/lib/netscape/plugins
+%define		mozdir		/usr/%{_lib}/mozilla/plugins
+%define		nsdir		/usr/%{_lib}/netscape/plugins
 
 %description
 DjVu is a web-centric format and software platform for distributing
