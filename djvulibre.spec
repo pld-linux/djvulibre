@@ -1,7 +1,7 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
-Version:	3.5.10
+Version:	3.5.11
 Release:	1
 License:	GPL
 Group:		Applications/Graphics
@@ -119,7 +119,7 @@ Wtyczka DjVu do Netscape.
 %build
 %{__aclocal}
 %{__autoconf}
-# there are aliasing violations - at least at libdjvu/BSByteStream.cpp:356-357
+# there are aliasing violations - at least at libdjvu/BSByteStream.cpp:363-364
 # (GPBuffer::GPBuffer casts unsigned int*& to void*&),
 # so -fno-strict-aliasing must be passed
 CXXFLAGS="%{rpmcflags} -fno-strict-aliasing"
