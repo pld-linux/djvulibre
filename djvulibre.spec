@@ -2,12 +2,13 @@ Summary:	DjVu viewers, encoders and utilities.
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia.
 Name:		djvulibre
 Version:	3.5.8
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Graphics
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-opt.patch
+Patch2:		%{name}-gcc3.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -117,6 +118,7 @@ Wtyczka DjVu do Netscape.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal}
