@@ -1,7 +1,7 @@
 Summary:	DjVu viewers, encoders and utilities.
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia.
 Name:		djvulibre
-Version:	3.5.7
+Version:	3.5.8
 Release:	1
 License:	GPL
 Group:		Applications/Graphics
@@ -13,7 +13,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	qt-devel >= 2.2.0
+BuildRequires:	qt-devel >= 3.0.5
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
