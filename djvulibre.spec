@@ -112,7 +112,7 @@ DjVu plugin for Netscape.
 %description -n netscape-plugin-%{name} -l pl
 Wtyczka DjVu do Netscape.
 
-%prep -q
+%prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
