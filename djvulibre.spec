@@ -1,5 +1,5 @@
-Summary:	DjVu viewers, encoders and utilities.
-Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia.
+Summary:	DjVu viewers, encoders and utilities
+Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.9
 Release:	1
