@@ -1,17 +1,17 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
-Version:	3.5.13
+Version:	3.5.14
 Release:	1
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	75b53200c89b0ce2aff8a74aaaae0484
+# Source0-md5:	4a3f17603468b2e6969190be18bf00d0
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
 Patch2:		%{name}-desktop.patch
 URL:		http://djvu.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
@@ -73,6 +73,20 @@ Ten pakiet zawiera: bibliotekê w C++, zestaw kompresorów, dekoderów
 i narzêdzi do plików w formacie DjVu. Przegl±darka oraz wtyczki do
 przegl±darek znajduj± siê w innych podpakietach.
 
+%package devel
+Summary:	Header file for DjVu library
+Summary(pl):	Plik nag³ówkowy biblioteki DjVu
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	libjpeg-devel
+Requires:	libstdc++-devel
+
+%description devel
+Header file for DjVu library.
+
+%description devel -l pl
+Plik nag³ówkowy biblioteki DjVu.
+
 %package djview
 Summary:	Qt-based DjVu viewer
 Summary(pl):	Oparta o Qt przegl±darka DjVu
@@ -121,30 +135,32 @@ Wtyczka DjVu do Netscape.
 
 %build
 cp -f /usr/share/automake/config.sub config
-%{__aclocal} -I config
+%{__aclocal} -I config -I gui/desktop
 %{__autoconf}
 QT_LIBS="-L%{_libdir} -lqt-mt"; export QT_LIBS
 QT_CFLAGS="-I%{_includedir}/qt"; export QT_CFLAGS
-%configure
+%configure \
+	PTHREAD_LIBS="-lpthread"
 
-%{__make} depend
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{mozdir},%{nsdir}}
 
+# pass dtop_* to allow build w/o gnome/kde/etc. installed
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	plugindir=%{mozdir} \
+	dtop_applications=%{_desktopdir} \
+	dtop_icons=%{_iconsdir} \
+	dtop_mimelnk=%{_datadir}/mimelnk \
+	dtop_applnk= \
+	dtop_pixmaps=%{_pixmapsdir} \
+	dtop_mime_info=%{_datadir}/mime-info \
+	dtop_application_registry=%{_datadir}/application-registry
 
-mv -f $RPM_BUILD_ROOT%{_libdir}/netscape/plugins/nsdejavu.so \
-	$RPM_BUILD_ROOT%{mozdir}
 cp -f $RPM_BUILD_ROOT%{mozdir}/nsdejavu.so $RPM_BUILD_ROOT%{nsdir}
-
-# make desktop-file-install is too environment-dependent
-cd gui/desktop
-install -D hi48-mimetype-djvu.png $RPM_BUILD_ROOT%{_pixmapsdir}/djvu.png
-install -D djview.desktop $RPM_BUILD_ROOT%{_desktopdir}/djview.desktop
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -158,7 +174,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/[!d]*
 %attr(755,root,root) %{_bindir}/d[!j]*
 %attr(755,root,root) %{_bindir}/djv[!i]*
-%attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/libdjvulibre.so.*.*.*
 %{_mandir}/man1/[!dn]*
 %{_mandir}/man1/d[!j]*
 %{_mandir}/man1/djv[!i]*
@@ -175,6 +191,12 @@ rm -rf $RPM_BUILD_ROOT
 %lang(zh) %{_datadir}/djvu/osi/zh
 %{_datadir}/djvu/pubtext
 
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libdjvulibre.so
+%{_libdir}/libdjvulibre.la
+%{_includedir}/libdjvu
+
 %files djview
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/djview
@@ -182,6 +204,12 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_mandir}/ja/man1/djview.1*
 %{_desktopdir}/djview.desktop
 %{_pixmapsdir}/djvu.png
+# KDE-specific
+%{_iconsdir}/hicolor/*/mimetypes/djvu.png
+%{_datadir}/mimelnk/image/x-djvu.desktop
+# GNOME-specific
+%{_datadir}/mime-info/djvu.*
+%{_datadir}/application-registry/djvu.applications
 
 %files -n mozilla-plugin-%{name}
 %defattr(644,root,root,755)
