@@ -2,7 +2,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.12
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -119,7 +119,7 @@ Wtyczka DjVu do Netscape.
 
 %build
 cp -f /usr/share/automake/config.sub config
-%{__aclocal}
+%{__aclocal} -I config
 %{__autoconf}
 QT_LIBS="-L%{_libdir} -lqt-mt"; export QT_LIBS
 QT_CFLAGS="-I%{_includedir}/qt"; export QT_CFLAGS
