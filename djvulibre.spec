@@ -1,14 +1,14 @@
 Summary:	DjVu viewers, encoders and utilities.
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia.
 Name:		djvulibre
-Version:	3.5.8
-Release:	2
+Version:	3.5.9
+Release:	1
 License:	GPL
 Group:		Applications/Graphics
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-opt.patch
-Patch2:		%{name}-gcc3.patch
+Patch2:		%{name}-nostrip.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -22,6 +22,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_xmandir	/usr/X11R6/man
 %define		mozdir		/usr/X11R6/lib/mozilla/plugins
 %define		nsdir		/usr/X11R6/lib/netscape/plugins
+
+# compiling by gcc 3.2 with "-O2 -march=athlon" produces djview that only
+# segfaults... maybe miscompilation, but hard to find where :/
+%ifarch athlon
+%define		optflags	-O2 -march=i686
+%endif
 
 %description
 DjVu is a web-centric format and software platform for distributing

@@ -1,0 +1,22 @@
+--- djvulibre-3.5.9/gui/djview/Makefile.in.orig	Fri Oct 11 20:39:33 2002
++++ djvulibre-3.5.9/gui/djview/Makefile.in	Fri Oct 11 21:02:22 2002
+@@ -181,7 +181,7 @@
+ 
+ install-bin: ${PROGRAM} FORCE
+ 	${INSTALL} -d ${DESTDIR}${bindir}
+-	${INSTALL} -s -m 0755 ${PROGRAM} ${DESTDIR}${bindir}
++	${INSTALL} -m 0755 ${PROGRAM} ${DESTDIR}${bindir}
+ 
+ install-man: FORCE
+ 	${INSTALL} -d ${DESTDIR}${mandir}/man1
+--- djvulibre-3.5.9/tools/Makefile.in.orig	Fri Oct 11 20:39:33 2002
++++ djvulibre-3.5.9/tools/Makefile.in	Fri Oct 11 21:02:37 2002
+@@ -67,7 +67,7 @@
+ install-bin: ${PROGRAMS} FORCE
+ 	${INSTALL} -d ${DESTDIR}${bindir}
+ 	for n in ${PROGRAMS} ; do \
+-	  ${INSTALL} -s -m 0755 $$n ${DESTDIR}${bindir} || exit ; done
++	  ${INSTALL} -m 0755 $$n ${DESTDIR}${bindir} || exit ; done
+ 
+ install-man: FORCE
+ 	${INSTALL} -d ${DESTDIR}${mandir}/man1
