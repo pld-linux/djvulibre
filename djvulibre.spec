@@ -76,7 +76,7 @@ przegl±darek znajduj± siê w innych podpakietach.
 Summary:	Qt-based DjVu viewer
 Summary(pl):	Oparta o Qt przegl±darka DjVu
 Group:		X11/Applications
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	djview
 
 %description djview
@@ -89,7 +89,7 @@ Oparta o Qt przegl±darka DjVu.
 Summary:	DjVu plugin for Mozilla
 Summary(pl):	Wtyczka DjVu do Mozilli
 Group:		X11/Libraries
-Requires:	%{name}-djview = %{version}
+Requires:	%{name}-djview = %{version}-%{release}
 Requires:	mozilla-embedded
 
 %description -n mozilla-plugin-%{name}
@@ -102,7 +102,7 @@ Wtyczka DjVu do Mozilli i przegl±darek na niej bazuj±cych.
 Summary:	DjVu plugin for Netscape
 Summary(pl):	Wtyczka DjVu do Netscape
 Group:		X11/Libraries
-Requires:	%{name}-djview = %{version}
+Requires:	%{name}-djview = %{version}-%{release}
 Requires:	netscape-common
 Obsoletes:	djview-netscape
 
@@ -118,7 +118,7 @@ Wtyczka DjVu do Netscape.
 %patch1 -p1
 
 %build
-cp /usr/share/automake/config.sub config
+cp -f /usr/share/automake/config.sub config
 %{__aclocal}
 %{__autoconf}
 QT_LIBS="-L%{_libdir} -lqt-mt"; export QT_LIBS
