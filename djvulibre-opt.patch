@@ -1,6 +1,6 @@
---- djvulibre-3.5.5/config/acinclude.m4.orig	Thu Mar 21 17:43:46 2002
-+++ djvulibre-3.5.5/config/acinclude.m4	Sat May 18 01:03:33 2002
-@@ -58,36 +58,6 @@
+--- djvulibre-3.5.10/config/acinclude.m4.orig	Mon Jan 27 13:31:55 2003
++++ djvulibre-3.5.10/config/acinclude.m4	Fri Apr 11 19:54:53 2003
+@@ -79,38 +79,6 @@
          [ac_debug=$enableval],[ac_debug=no])
     OPTS=
     AC_SUBST(OPTS)
@@ -21,7 +21,7 @@
 -       *) CFLAGS="$CFLAGS $opt" ;;
 -     esac
 -   done
--   if test $ac_debug = no ; then
+-   if test x$ac_debug = xno ; then
 -     OPTS=-DNO_DEBUG
 -     AC_CHECK_CXX_OPT([-Wall],[OPTS="$OPTS -Wall"])
 -     AC_CHECK_CXX_OPT([-O3],[OPTS="$OPTS -O3"],
@@ -33,6 +33,8 @@
 -           AC_CHECK_CXX_OPT([$opt], [OPTS="$OPTS $opt"])
 -           ;;
 -      esac
+-   else
+-     AC_CHECK_CXX_OPT([-Wall],[OPTS="$OPTS -Wall"])
 -   fi
     case x"$ac_debug" in
       x[0-9])  OPTS="$OPTS -DDEBUGLVL=$ac_debug" ;;
