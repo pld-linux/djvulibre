@@ -5,7 +5,7 @@ Version:	3.5.9
 Release:	2
 License:	GPL
 Group:		Applications/Graphics
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/djvu/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-nostrip.patch
