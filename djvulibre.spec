@@ -1,7 +1,7 @@
 Summary:	DjVu viewers, encoders and utilities.
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia.
 Name:		djvulibre
-Version:	3.5.6
+Version:	3.5.7
 Release:	1
 License:	GPL
 Group:		Applications/Graphics
@@ -126,8 +126,6 @@ aclocal
 %{__make} depend
 %{__make}
 
-gzip -9nf README NEWS TODO doc/*.txt
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_xbindir},%{_xmandir}/man1,%{mozdir},%{nsdir}}
@@ -152,7 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/*
+%doc COPYRIGHT NEWS README TODO doc/*
 %attr(755,root,root) %{_bindir}/*
 %{_libdir}/lib*.so
 %{_mandir}/man1/*
