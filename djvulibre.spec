@@ -5,7 +5,7 @@ Version:	3.5.6
 Release:	1
 License:	GPL
 Group:		Applications/Graphics
-Source0:	http://prdownloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-opt.patch
 URL:		http://djvu.sourceforge.net/
