@@ -2,7 +2,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.9
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Graphics
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/djvu/%{name}-%{version}.tar.gz
@@ -22,12 +22,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_xmandir	/usr/X11R6/man
 %define		mozdir		/usr/X11R6/lib/mozilla/plugins
 %define		nsdir		/usr/X11R6/lib/netscape/plugins
-
-# compiling by gcc 3.2 with "-O2 -march=athlon" produces djview that only
-# segfaults... maybe miscompilation, but hard to find where :/
-%ifarch athlon
-%define		optflags	-O2 -march=i686
-%endif
 
 %description
 DjVu is a web-centric format and software platform for distributing
@@ -129,6 +123,9 @@ Wtyczka DjVu do Netscape.
 %build
 %{__aclocal}
 %{__autoconf}
+# there seems to be aliasing problem at libdjvu/BSByteStream.cpp:356-357
+# (bug in code or gcc) - happens at least with "-O2 -march=athlon"
+CXXFLAGS="%{rpmcflags} -fno-strict-aliasing"
 %configure
 
 %{__make} depend
@@ -160,7 +157,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc COPYRIGHT NEWS README TODO doc/*
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/lib*.so
 %{_mandir}/man1/*
 %dir %{_datadir}/djvu
 %{_datadir}/djvu/languages.xml
