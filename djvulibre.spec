@@ -27,7 +27,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 DjVu is a web-centric format and software platform for distributing
 documents and images. DjVu content downloads faster, displays and
 renders faster, looks nicer on a screen, and consume less client
-resources than competing formats. DjVu was originally developped at
+resources than competing formats. DjVu was originally developed at
 AT&T Labs-Research by Leon Bottou, Yann LeCun, Patrick Haffner, and
 many others. In March 2000, AT&T sold DjVu to LizardTech Inc. who now
 distributes Windows/Mac plug-ins, and commercial encoders (mostly on
