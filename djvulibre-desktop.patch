@@ -1,11 +1,13 @@
---- djvulibre-3.5.13/gui/desktop/djview.desktop.orig	2004-04-02 18:27:57.000000000 +0200
-+++ djvulibre-3.5.13/gui/desktop/djview.desktop	2004-04-23 07:56:17.857673264 +0200
-@@ -11,5 +11,7 @@
+--- djvulibre-3.5.14/gui/desktop/djview.desktop.orig	2004-05-05 18:10:01.000000000 +0200
++++ djvulibre-3.5.14/gui/desktop/djview.desktop	2004-07-25 21:04:09.754254528 +0200
+@@ -11,6 +11,8 @@
  GenericName[fr]=Afficheur DjVu
  GenericName[it]=Visualizzatore DjVu
  GenericName[ja]=DjVuビューア
 +GenericName[pl]=Przeglądarka DjVu
- Terminal=0
+ StartupWMClass=Djview
+-Terminal=0
 -Categories=Qt;Graphics
-+Categories=Qt;Graphics;
-+# vi:encoding=utf-8
++Terminal=false
++Categories=Qt;Graphics;Viewer;
++# vi: encoding=utf-8
