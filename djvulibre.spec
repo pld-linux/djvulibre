@@ -120,7 +120,7 @@ Wtyczka DjVu do Netscape.
 
 %build
 aclocal
-autoconf
+%{__autoconf}
 %configure
 
 %{__make} depend
