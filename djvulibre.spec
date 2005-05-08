@@ -1,8 +1,12 @@
+#
+# Conditional build:
+%bcond_without	qt	# disable qt wrapper
+#
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.14
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -15,7 +19,7 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	qt-devel >= 3.0.5
+%{?with_qt:BuildRequires:	qt-devel >= 3.0.5}
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -160,7 +164,9 @@ install -d $RPM_BUILD_ROOT{%{mozdir},%{nsdir}}
 	dtop_mime_info=%{_datadir}/mime-info \
 	dtop_application_registry=%{_datadir}/application-registry
 
+%if %{with qt}
 cp -f $RPM_BUILD_ROOT%{mozdir}/nsdejavu.so $RPM_BUILD_ROOT%{nsdir}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -197,6 +203,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdjvulibre.la
 %{_includedir}/libdjvu
 
+%if %{with qt}
 %files djview
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/djview
@@ -220,3 +227,4 @@ rm -rf $RPM_BUILD_ROOT
 %files -n netscape-plugin-%{name}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{nsdir}/*.so
+%endif
