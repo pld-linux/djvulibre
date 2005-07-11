@@ -161,8 +161,8 @@ install -d $RPM_BUILD_ROOT{%{mozdir},%{nsdir}}
 	dtop_mimelnk=%{_datadir}/mimelnk \
 	dtop_applnk= \
 	dtop_pixmaps=%{_pixmapsdir} \
-	dtop_mime_info=%{_datadir}/mime-info \
-	dtop_application_registry=%{_datadir}/application-registry
+	dtop_mime_info= \
+	dtop_application_registry=
 
 %if %{with qt}
 cp -f $RPM_BUILD_ROOT%{mozdir}/nsdejavu.so $RPM_BUILD_ROOT%{nsdir}
@@ -209,14 +209,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/djview
 %{_mandir}/man1/djview.1*
 %lang(ja) %{_mandir}/ja/man1/djview.1*
-%{_desktopdir}/djview.desktop
-%{_pixmapsdir}/djvu.png
-# KDE-specific
-%{_iconsdir}/hicolor/*/mimetypes/djvu.png
 %{_datadir}/mimelnk/image/x-djvu.desktop
-# GNOME-specific
-%{_datadir}/mime-info/djvu.*
-%{_datadir}/application-registry/djvu.applications
+%{_desktopdir}/djview.desktop
+%{_iconsdir}/hicolor/*/mimetypes/djvu.png
+%{_pixmapsdir}/djvu.png
 
 %files -n mozilla-plugin-%{name}
 %defattr(644,root,root,755)
