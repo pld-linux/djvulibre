@@ -1,22 +1,24 @@
---- djvulibre-3.5.14/gui/djview/Makefile.in.orig	2004-06-11 18:42:33.000000000 +0200
-+++ djvulibre-3.5.14/gui/djview/Makefile.in	2004-07-25 21:01:54.344839888 +0200
-@@ -172,7 +172,7 @@
+diff -aurN djvulibre-3.5.15.orig/gui/djview/Makefile.in djvulibre-3.5.15/gui/djview/Makefile.in
+--- djvulibre-3.5.15.orig/gui/djview/Makefile.in	2004-08-24 19:58:55.000000000 +0200
++++ djvulibre-3.5.15/gui/djview/Makefile.in	2005-07-19 19:15:19.000000000 +0200
+@@ -174,7 +174,7 @@
  install-bin: ${PROGRAM} FORCE
  	${INSTALL} -d ${DESTDIR}${bindir}
  	${LIBTOOL} --mode=install \
--	  ${INSTALL} -s -m 0755 ${PROGRAM} ${DESTDIR}${bindir}
-+	  ${INSTALL} -m 0755 ${PROGRAM} ${DESTDIR}${bindir}
+-	  ${INSTALL_PROGRAM} -s ${PROGRAM} ${DESTDIR}${bindir}
++	  ${INSTALL_PROGRAM} ${PROGRAM} ${DESTDIR}${bindir}
  
  install-man: FORCE
  	${INSTALL} -d ${DESTDIR}${mandir}/man1
---- djvulibre-3.5.14/tools/Makefile.in.orig	2004-06-16 21:59:11.000000000 +0200
-+++ djvulibre-3.5.14/tools/Makefile.in	2004-07-25 21:02:09.567525688 +0200
-@@ -67,7 +67,7 @@
+diff -aurN djvulibre-3.5.15.orig/tools/Makefile.in djvulibre-3.5.15/tools/Makefile.in
+--- djvulibre-3.5.15.orig/tools/Makefile.in	2005-03-13 20:17:32.000000000 +0100
++++ djvulibre-3.5.15/tools/Makefile.in	2005-07-19 19:15:38.000000000 +0200
+@@ -71,7 +71,7 @@
  	${INSTALL} -d ${DESTDIR}${bindir}
  	for n in ${PROGRAMS} ; do \
  	  ${LIBTOOL} --mode=install \
--	    ${INSTALL} -s -m 0755 $$n ${DESTDIR}${bindir} \
-+	    ${INSTALL} -m 0755 $$n ${DESTDIR}${bindir} \
+-	    ${INSTALL_PROGRAM} -s $$n ${DESTDIR}${bindir} \
++	    ${INSTALL_PROGRAM} $$n ${DESTDIR}${bindir} \
            || exit ; done
  
  install-man: FORCE
