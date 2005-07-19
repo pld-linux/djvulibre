@@ -1,6 +1,6 @@
---- djvulibre-3.5.14/config/acinclude.m4.orig	2004-05-28 20:41:49.000000000 +0200
-+++ djvulibre-3.5.14/config/acinclude.m4	2004-07-25 21:00:30.819537664 +0200
-@@ -79,41 +79,6 @@
+--- djvulibre-3.5.15/config/acinclude.m4.orig	2005-06-08 17:09:14.000000000 +0200
++++ djvulibre-3.5.15/config/acinclude.m4	2005-07-18 23:33:23.354111056 +0200
+@@ -79,45 +79,6 @@
          [ac_debug=$enableval],[ac_debug=no])
     OPTS=
     AC_SUBST(OPTS)
@@ -26,14 +26,18 @@
 -     AC_CHECK_CXX_OPT([-Wall],[OPTS="$OPTS -Wall"])
 -     AC_CHECK_CXX_OPT([-O3],[OPTS="$OPTS -O3"],
 -        [ AC_CHECK_CXX_OPT([-O2], [OPTS="$OPTS -O2"] ) ] )
--     dnl This triggers compiler bugs with gcc-3.2.2
+-     dnl This triggers compiler bugs with gcc-3.2.2:
 -     dnl AC_CHECK_CXX_OPT([-funroll-loops], [OPTS="$OPTS -funroll-loops"])
+-     dnl QT3 has plenty of this:
+-     AC_CHECK_CXX_OPT([-Wno-non-virtual-dtor],[OPTS="$OPTS -Wno-non-virtual-dtor"])
 -     cpu=`uname -m 2>/dev/null`
 -     test -z "$cpu" && cpu=${host_cpu}
 -     case "${host_cpu}" in
 -        i?86)
--           opt="-mcpu=${host_cpu}"
--           AC_CHECK_CXX_OPT([$opt], [OPTS="$OPTS $opt"])
+-           opt="-mtune=${host_cpu}"
+-           AC_CHECK_CXX_OPT([$opt], [OPTS="$OPTS $opt"],
+-             [ opt="-mcpu=${host_cpu}"
+-               AC_CHECK_CXX_OPT([$opt], [OPTS="$OPTS $opt"]) ])
 -           ;;
 -      esac
 -   else
