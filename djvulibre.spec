@@ -27,7 +27,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_plugindir	%{_libdir}/browser-plugins
 
-# use macro, otherwise extra LF inserted along with the ifarch
+# list of supported browsers, in free form text
 %define		browsers mozilla, netscape
 
 %description
@@ -222,6 +222,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_plugindir}/*.so
 %{_mandir}/man1/nsdejavu.1*
 %lang(ja) %{_mandir}/ja/man1/nsdejavu.1*
-
-#%attr(755,root,root) %{nsdir}/*.so
 %endif
