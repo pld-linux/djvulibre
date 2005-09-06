@@ -1,3 +1,5 @@
+# TODO
+# - test and add other browsers
 #
 # Conditional build:
 %bcond_without	qt	# disable qt wrapper
@@ -6,7 +8,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.15
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -23,8 +25,10 @@ BuildRequires:	libstdc++-devel
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		mozdir		/usr/%{_lib}/mozilla/plugins
-%define		nsdir		/usr/%{_lib}/netscape/plugins
+%define		_plugindir	%{_libdir}/browser-plugins
+
+# use macro, otherwise extra LF inserted along with the ifarch
+%define		browsers mozilla, netscape
 
 %description
 DjVu is a web-centric format and software platform for distributing
@@ -104,32 +108,23 @@ Qt-based DjVu viewer.
 %description djview -l pl
 Oparta o Qt przegl±darka DjVu.
 
-%package -n mozilla-plugin-%{name}
-Summary:	DjVu plugin for Mozilla
-Summary(pl):	Wtyczka DjVu do Mozilli
+%package -n browser-plugin-%{name}
+Summary:	DjVu browser plugin
+#Summary(pl):	Wtyczka DjVu do Mozilli
 Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
-Requires:	mozilla-embedded
+Obsoletes:	mozilla-plugin-djvulibre
+Obsoletes:	netscape-plugin-djvulibre
+Obsoletes:	djview-netscape
+# for migrate purposes (greedy poldek upgrade)
+Provides:	mozilla-plugin-djvulibre
+Provides:	netscape-plugin-djvulibre
+#TODORequires:	netscape-common
 
-%description -n mozilla-plugin-%{name}
+%description -n browser-plugin-%{name}
 DjVu plugin for Mozilla and Mozilla-based browsers.
 
-%description -n mozilla-plugin-%{name} -l pl
-Wtyczka DjVu do Mozilli i przegl±darek na niej bazuj±cych.
-
-%package -n netscape-plugin-%{name}
-Summary:	DjVu plugin for Netscape
-Summary(pl):	Wtyczka DjVu do Netscape
-Group:		X11/Libraries
-Requires:	%{name}-djview = %{version}-%{release}
-Requires:	netscape-common
-Obsoletes:	djview-netscape
-
-%description -n netscape-plugin-%{name}
-DjVu plugin for Netscape.
-
-%description -n netscape-plugin-%{name} -l pl
-Wtyczka DjVu do Netscape.
+Supported browsers: %{browsers}.
 
 %prep
 %setup -q
@@ -150,12 +145,12 @@ QT_CFLAGS="-I%{_includedir}/qt"; export QT_CFLAGS
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{mozdir},%{nsdir}}
+install -d $RPM_BUILD_ROOT%{_plugindir}
 
 # pass dtop_* to allow build w/o gnome/kde/etc. installed
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	plugindir=%{mozdir} \
+	plugindir=%{_plugindir} \
 	dtop_applications=%{_desktopdir} \
 	dtop_icons=%{_iconsdir} \
 	dtop_mimelnk=%{_datadir}/mimelnk \
@@ -164,15 +159,23 @@ install -d $RPM_BUILD_ROOT{%{mozdir},%{nsdir}}
 	dtop_mime_info= \
 	dtop_application_registry=
 
-%if %{with qt}
-cp -f $RPM_BUILD_ROOT%{mozdir}/nsdejavu.so $RPM_BUILD_ROOT%{nsdir}
-%endif
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
+
+%triggerin -n browser-plugin-%{name} -- mozilla
+%nsplugin_install -d %{_libdir}/mozilla/plugins nsdejavu.so
+
+%triggerun -n browser-plugin-%{name} -- mozilla
+%nsplugin_uninstall -d %{_libdir}/mozilla/plugins nsdejavu.so
+
+%triggerin -n browser-plugin-%{name} -- netscape-common
+%nsplugin_install -d %{_libdir}/netscape/plugins nsdejavu.so
+
+%triggerun -n browser-plugin-%{name} -- netscape-common
+%nsplugin_uninstall -d %{_libdir}/netscape/plugins nsdejavu.so
 
 %files
 %defattr(644,root,root,755)
@@ -214,13 +217,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*/mimetypes/djvu.png
 %{_pixmapsdir}/djvu.png
 
-%files -n mozilla-plugin-%{name}
+%files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{mozdir}/*.so
+%attr(755,root,root) %{_plugindir}/*.so
 %{_mandir}/man1/nsdejavu.1*
 %lang(ja) %{_mandir}/ja/man1/nsdejavu.1*
 
-%files -n netscape-plugin-%{name}
-%defattr(644,root,root,755)
-%attr(755,root,root) %{nsdir}/*.so
+#%attr(755,root,root) %{nsdir}/*.so
 %endif
