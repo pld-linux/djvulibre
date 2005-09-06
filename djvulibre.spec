@@ -110,7 +110,7 @@ Oparta o Qt przegl±darka DjVu.
 
 %package -n browser-plugin-%{name}
 Summary:	DjVu browser plugin
-#Summary(pl):	Wtyczka DjVu do Mozilli
+Summary(pl):	Wtyczka DjVu do przegl±derek WWW
 Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
 Requires:	browser-plugins(%{_target_cpu})
@@ -125,6 +125,11 @@ Provides:	netscape-plugin-djvulibre
 DjVu plugin for Mozilla and Mozilla-based browsers.
 
 Supported browsers: %{browsers}.
+
+%description -n browser-plugin-%{name} -l pl
+Wtyczka DjVu do przegl±darek zgodnych z Mozill±.
+
+Obs³ugiwane przegl±darki: %{browsers}.
 
 %prep
 %setup -q
