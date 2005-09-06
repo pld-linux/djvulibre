@@ -120,7 +120,6 @@ Obsoletes:	djview-netscape
 # for migrate purposes (greedy poldek upgrade)
 Provides:	mozilla-plugin-djvulibre
 Provides:	netscape-plugin-djvulibre
-#TODORequires:	netscape-common
 
 %description -n browser-plugin-%{name}
 DjVu plugin for Mozilla and Mozilla-based browsers.
