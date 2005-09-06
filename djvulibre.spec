@@ -21,6 +21,7 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	rpmbuild(macros) >= 1.236
 %{?with_qt:BuildRequires:	qt-devel >= 3.0.5}
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -181,6 +182,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %triggerun -n browser-plugin-%{name} -- netscape-common
 %nsplugin_uninstall -d %{_libdir}/netscape/plugins nsdejavu.so
+
+# as rpm removes the old obsoleted package files after the triggers
+# are ran, add another trigger to make the links there.
+%triggerpostun -n browser-plugin-%{name} -- mozilla-plugin-%{name}
+%nsplugin_install -f -d %{_libdir}/mozilla/plugins nsdejavu.so
+
+%triggerpostun -n browser-plugin-%{name} -- netscape-plugin-%{name}
+%nsplugin_install -f -d %{_libdir}/netscape/plugins nsdejavu.so
 
 %files
 %defattr(644,root,root,755)
