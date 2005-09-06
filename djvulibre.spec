@@ -113,6 +113,7 @@ Summary:	DjVu browser plugin
 #Summary(pl):	Wtyczka DjVu do Mozilli
 Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
+Requires:	browser-plugins(%{_target_cpu})
 Obsoletes:	mozilla-plugin-djvulibre
 Obsoletes:	netscape-plugin-djvulibre
 Obsoletes:	djview-netscape
