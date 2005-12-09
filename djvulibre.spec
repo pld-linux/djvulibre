@@ -8,7 +8,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.16
-Release:	1.1
+Release:	1.2
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -178,10 +178,10 @@ rm -rf $RPM_BUILD_ROOT
 %nsplugin_uninstall -d %{_libdir}/mozilla/plugins nsdejavu.so
 
 %triggerin -n browser-plugin-%{name} -- mozilla-firefox
-%nsplugin_install -d %{_libdir}/mozilla/plugins nsdejavu.so
+%nsplugin_install -d %{_libdir}/mozilla-firefox/plugins nsdejavu.so
 
 %triggerun -n browser-plugin-%{name} -- mozilla-forefox
-%nsplugin_uninstall -d %{_libdir}/mozilla/plugins nsdejavu.so
+%nsplugin_uninstall -d %{_libdir}/mozilla-firefox/plugins nsdejavu.so
 
 %triggerin -n browser-plugin-%{name} -- netscape-common
 %nsplugin_install -d %{_libdir}/netscape/plugins nsdejavu.so
