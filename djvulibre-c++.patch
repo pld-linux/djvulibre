@@ -1,0 +1,211 @@
+--- djvulibre-3.5.16/libdjvu/GURL.h~	2003-11-07 23:08:21.000000000 +0100
++++ djvulibre-3.5.16/libdjvu/GURL.h	2005-12-11 06:53:06.000000000 +0100
+@@ -278,10 +278,10 @@
+       //@}
+ 
+       /// Returns TRUE if #gurl1# and #gurl2# are the same
+-   bool	GURL::operator==(const GURL & gurl2) const;
++   bool	operator==(const GURL & gurl2) const;
+ 
+       /// Returns TRUE if #gurl1# and #gurl2# are different
+-   bool	GURL::operator!=(const GURL & gurl2) const;
++   bool	operator!=(const GURL & gurl2) const;
+ 
+       /// Assignment operator
+    GURL &	operator=(const GURL & url);
+--- djvulibre-3.5.16/libdjvu/ByteStream.h~	2003-11-07 23:08:20.000000000 +0100
++++ djvulibre-3.5.16/libdjvu/ByteStream.h	2005-12-11 07:07:29.000000000 +0100
+@@ -242,8 +242,8 @@
+       and writes it to the specified stream. */
+   void formatmessage( const char *fmt, ... );
+   /** Looks up the message and writes it to the specified stream. */
+-  void ByteStream::writemessage( const char *message );
++  void writemessage( const char *message );
+   /** Writes a one-byte integer to a ByteStream. */
+   void write8 (unsigned int card8);
+   /** Writes a two-bytes integer to a ByteStream.
+--- djvulibre-3.5.16/libdjvu/GContainer.h~	2004-05-13 17:16:34.000000000 +0200
++++ djvulibre-3.5.16/libdjvu/GContainer.h	2005-12-11 08:15:38.000000000 +0100
+@@ -969,6 +969,92 @@
+ 
+ 
+ // ------------------------------------------------------------
++// HASH FUNCTIONS
++// ------------------------------------------------------------
++
++
++/** @name Hash functions
++    These functions let you use template class \Ref{GMap} with the
++    corresponding elementary types. The returned hash code may be reduced to
++    an arbitrary range by computing its remainder modulo the upper bound of
++    the range.
++    @memo Hash functions for elementary types. */
++//@{
++
++/** Hashing function (unsigned int). */
++static inline unsigned int 
++hash(const unsigned int & x) 
++{ 
++  return x; 
++}
++
++/** Hashing function (int). */
++static inline unsigned int 
++hash(const int & x) 
++{ 
++  return (unsigned int)x;
++}
++
++/** Hashing function (long). */
++static inline unsigned int
++hash(const long & x) 
++{ 
++  return (unsigned int)x;
++}
++
++/** Hashing function (unsigned long). */
++static inline unsigned int
++hash(const unsigned long & x) 
++{ 
++  return (unsigned int)x;
++}
++
++/** Hashing function (void *). */
++static inline unsigned int 
++hash(void * const & x) 
++{ 
++  return (unsigned long) x; 
++}
++
++/** Hashing function (const void *). */
++static inline unsigned int 
++hash(const void * const & x) 
++{ 
++  return (unsigned long) x; 
++}
++
++/** Hashing function (float). */
++static inline unsigned int
++hash(const float & x) 
++{ 
++  // optimizer will get rid of unnecessary code  
++  unsigned int *addr = (unsigned int*)&x;
++  if (sizeof(float)<2*sizeof(unsigned int))
++    return addr[0];
++  else
++    return addr[0]^addr[1];
++}
++
++/** Hashing function (double). */
++static inline unsigned int
++hash(const double & x) 
++{ 
++  // optimizer will get rid of unnecessary code
++  unsigned int *addr = (unsigned int*)&x;
++  if (sizeof(double)<2*sizeof(unsigned int))
++    return addr[0];
++  else if (sizeof(double)<4*sizeof(unsigned int))
++    return addr[0]^addr[1];
++  else
++    return addr[0]^addr[1]^addr[2]^addr[3];    
++}
++
++
++//@}
++
++
++
++// ------------------------------------------------------------
+ // ASSOCIATIVE MAPS
+ // ------------------------------------------------------------
+ 
+@@ -1266,89 +1352,6 @@
+ };
+ 
+ 
+-// ------------------------------------------------------------
+-// HASH FUNCTIONS
+-// ------------------------------------------------------------
+-
+-
+-/** @name Hash functions
+-    These functions let you use template class \Ref{GMap} with the
+-    corresponding elementary types. The returned hash code may be reduced to
+-    an arbitrary range by computing its remainder modulo the upper bound of
+-    the range.
+-    @memo Hash functions for elementary types. */
+-//@{
+-
+-/** Hashing function (unsigned int). */
+-static inline unsigned int 
+-hash(const unsigned int & x) 
+-{ 
+-  return x; 
+-}
+-
+-/** Hashing function (int). */
+-static inline unsigned int 
+-hash(const int & x) 
+-{ 
+-  return (unsigned int)x;
+-}
+-
+-/** Hashing function (long). */
+-static inline unsigned int
+-hash(const long & x) 
+-{ 
+-  return (unsigned int)x;
+-}
+-
+-/** Hashing function (unsigned long). */
+-static inline unsigned int
+-hash(const unsigned long & x) 
+-{ 
+-  return (unsigned int)x;
+-}
+-
+-/** Hashing function (void *). */
+-static inline unsigned int 
+-hash(void * const & x) 
+-{ 
+-  return (unsigned long) x; 
+-}
+-
+-/** Hashing function (const void *). */
+-static inline unsigned int 
+-hash(const void * const & x) 
+-{ 
+-  return (unsigned long) x; 
+-}
+-
+-/** Hashing function (float). */
+-static inline unsigned int
+-hash(const float & x) 
+-{ 
+-  // optimizer will get rid of unnecessary code  
+-  unsigned int *addr = (unsigned int*)&x;
+-  if (sizeof(float)<2*sizeof(unsigned int))
+-    return addr[0];
+-  else
+-    return addr[0]^addr[1];
+-}
+-
+-/** Hashing function (double). */
+-static inline unsigned int
+-hash(const double & x) 
+-{ 
+-  // optimizer will get rid of unnecessary code
+-  unsigned int *addr = (unsigned int*)&x;
+-  if (sizeof(double)<2*sizeof(unsigned int))
+-    return addr[0];
+-  else if (sizeof(double)<4*sizeof(unsigned int))
+-    return addr[0]^addr[1];
+-  else
+-    return addr[0]^addr[1]^addr[2]^addr[3];    
+-}
+-
+-
+-//@}
+ //@}
+ //@}
+ 

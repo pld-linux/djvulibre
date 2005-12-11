@@ -16,6 +16,7 @@ Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
 Patch2:		%{name}-desktop.patch
+Patch3:		%{name}-c++.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -137,6 +138,7 @@ Obs³ugiwane przegl±darki: %{browsers}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config
