@@ -22,8 +22,8 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	rpmbuild(macros) >= 1.236
 %{?with_qt:BuildRequires:	qt-devel >= 3.0.5}
+BuildRequires:	rpmbuild(macros) >= 1.236
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -76,11 +76,11 @@ Windows).
 Aby wypromowaæ DjVu jako sieciowy standard, LizardTech udostêpni³
 wzorcow± implementacjê DjVu na licencji GPL w pa¼dzierniku 2000.
 DjVuLibre (czyli wolne DjVu) jest rozszerzon± wersj± tego kodu
-rozwijan± przez pomys³odawców DjVu. Jest kompatybilna z wersj±
-3.5 oprogramowania LizardTech DjVu.
+rozwijan± przez pomys³odawców DjVu. Jest kompatybilna z wersj± 3.5
+oprogramowania LizardTech DjVu.
 
-Ten pakiet zawiera: bibliotekê w C++, zestaw kompresorów, dekoderów
-i narzêdzi do plików w formacie DjVu. Przegl±darka oraz wtyczki do
+Ten pakiet zawiera: bibliotekê w C++, zestaw kompresorów, dekoderów i
+narzêdzi do plików w formacie DjVu. Przegl±darka oraz wtyczki do
 przegl±darek znajduj± siê w innych podpakietach.
 
 %package devel
