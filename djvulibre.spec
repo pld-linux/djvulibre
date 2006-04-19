@@ -191,6 +191,12 @@ rm -rf $RPM_BUILD_ROOT
 %triggerun -n browser-plugin-%{name} -- netscape-common
 %nsplugin_uninstall -d %{_libdir}/netscape/plugins nsdejavu.so
 
+%triggerin -n browser-plugin-%{name} -- seamonkey
+%nsplugin_install -d %{_libdir}/seamonkey/plugins nsdejavu.so
+
+%triggerun -n browser-plugin-%{name} -- seamonkey
+%nsplugin_uninstall -d %{_libdir}/seamonkey/plugins nsdejavu.so
+
 # as rpm removes the old obsoleted package files after the triggers
 # are ran, add another trigger to make the links there.
 %triggerpostun -n browser-plugin-%{name} -- mozilla-plugin-%{name}
