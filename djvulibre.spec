@@ -8,7 +8,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.16
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -115,7 +115,7 @@ Summary:	DjVu browser plugin
 Summary(pl):	Wtyczka DjVu do przegl±derek WWW
 Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
-Requires:	browser-plugins(%{_target_cpu})
+Requires:	browser-plugins(%{_target_base_arch})
 Obsoletes:	mozilla-plugin-djvulibre
 Obsoletes:	netscape-plugin-djvulibre
 Obsoletes:	djview-netscape
