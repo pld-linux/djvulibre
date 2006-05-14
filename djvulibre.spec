@@ -30,7 +30,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_plugindir	%{_libdir}/browser-plugins
 
 # list of supported browsers, in free form text
-%define		browsers mozilla, netscape
+%define		browsers mozilla, mozilla-firefox, netscape, seamonkey
 
 %description
 DjVu is a web-centric format and software platform for distributing
