@@ -12,7 +12,7 @@ Release:	0.1
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	e870c77ee2647ccd6f5df053d7b8195e
+# Source0-md5:	18e71eec1f7d59ef4710b405ea64650e
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
 Patch2:		%{name}-desktop.patch
