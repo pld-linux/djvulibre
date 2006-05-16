@@ -8,7 +8,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.17
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -231,6 +231,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libdjvulibre.so
 %{_libdir}/libdjvulibre.la
 %{_includedir}/libdjvu
+%{_pkgconfigdir}/*.pc
 
 %if %{with qt}
 %files djview
