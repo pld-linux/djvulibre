@@ -1,6 +1,7 @@
---- djvulibre-3.5.15/config/acinclude.m4.orig	2005-06-08 17:09:14.000000000 +0200
-+++ djvulibre-3.5.15/config/acinclude.m4	2005-07-18 23:33:23.354111056 +0200
-@@ -79,45 +79,6 @@
+diff -aurN djvulibre-3.5.17.orig/config/acinclude.m4 djvulibre-3.5.17/config/acinclude.m4
+--- djvulibre-3.5.17.orig/config/acinclude.m4	2006-02-22 00:16:17.000000000 +0100
++++ djvulibre-3.5.17/config/acinclude.m4	2006-05-16 19:04:01.600526896 +0200
+@@ -79,46 +79,6 @@
          [ac_debug=$enableval],[ac_debug=no])
     OPTS=
     AC_SUBST(OPTS)
@@ -42,6 +43,7 @@
 -      esac
 -   else
 -     AC_CHECK_CXX_OPT([-Wall],[OPTS="$OPTS -Wall"])
+-     AC_CHECK_CXX_OPT([-Wno-non-virtual-dtor],[OPTS="$OPTS -Wno-non-virtual-dtor"])
 -   fi
     case x"$ac_debug" in
  changequote(<<, >>)dnl
