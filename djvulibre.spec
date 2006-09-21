@@ -8,7 +8,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.17
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -239,7 +239,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/djview
 %{_mandir}/man1/djview.1*
 %lang(ja) %{_mandir}/ja/man1/djview.1*
-%{_datadir}/mimelnk/image/x-djvu.desktop
+# don't include here - conflicts with kdelibs
+# %{_datadir}/mimelnk/image/x-djvu.desktop
 %{_desktopdir}/djview.desktop
 %{_iconsdir}/hicolor/*/mimetypes/djvu.png
 %{_pixmapsdir}/djvu.png
