@@ -8,7 +8,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.17
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -29,7 +29,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_plugindir	%{_libdir}/browser-plugins
 
 # list of supported browsers, in free form text
-%define		browsers mozilla, mozilla-firefox, netscape, seamonkey
+%define		browsers mozilla, mozilla-firefox, mozilla-firefox-bin, netscape, seamonkey
 
 %description
 DjVu is a web-centric format and software platform for distributing
@@ -182,6 +182,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %triggerun -n browser-plugin-%{name} -- mozilla-forefox
 %nsplugin_uninstall -d %{_libdir}/mozilla-firefox/plugins nsdejavu.so
+
+%triggerin -n browser-plugin-%{name} -- mozilla-firefox-bin
+%nsplugin_install -d %{_libdir}/mozilla-firefox-bin/plugins nsdejavu.so
+
+%triggerun -n browser-plugin-%{name} -- mozilla-forefox-bin
+%nsplugin_uninstall -d %{_libdir}/mozilla-firefox-bin/plugins nsdejavu.so
 
 %triggerin -n browser-plugin-%{name} -- netscape-common
 %nsplugin_install -d %{_libdir}/netscape/plugins nsdejavu.so
