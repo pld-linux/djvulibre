@@ -1,6 +1,3 @@
-# TODO
-# - test and add other browsers
-#
 # Conditional build:
 %bcond_without	qt	# disable qt wrapper
 #
@@ -8,7 +5,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
 Version:	3.5.17
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -22,14 +19,9 @@ BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
 %{?with_qt:BuildRequires:	qt-devel >= 3.0.5}
-BuildRequires:	rpmbuild(macros) >= 1.236
+BuildRequires:	rpmbuild(macros) >= 1.357
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_plugindir	%{_libdir}/browser-plugins
-
-# list of supported browsers, in free form text
-%define		browsers mozilla, mozilla-firefox, mozilla-firefox-bin, netscape, seamonkey
 
 %description
 DjVu is a web-centric format and software platform for distributing
@@ -114,10 +106,11 @@ Summary:	DjVu browser plugin
 Summary(pl):	Wtyczka DjVu do przegl±derek WWW
 Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
+Requires:	browser-plugins >= 2.0
 Requires:	browser-plugins(%{_target_base_arch})
+Obsoletes:	djview-netscape
 Obsoletes:	mozilla-plugin-djvulibre
 Obsoletes:	netscape-plugin-djvulibre
-Obsoletes:	djview-netscape
 # for migrate purposes (greedy poldek upgrade)
 Provides:	mozilla-plugin-djvulibre
 Provides:	netscape-plugin-djvulibre
@@ -125,12 +118,8 @@ Provides:	netscape-plugin-djvulibre
 %description -n browser-plugin-%{name}
 DjVu plugin for Mozilla and Mozilla-based browsers.
 
-Supported browsers: %{browsers}.
-
 %description -n browser-plugin-%{name} -l pl
 Wtyczka DjVu do przegl±darek zgodnych z Mozill±.
-
-Obs³ugiwane przegl±darki: %{browsers}.
 
 %prep
 %setup -q
@@ -142,8 +131,8 @@ Obs³ugiwane przegl±darki: %{browsers}.
 cp -f /usr/share/automake/config.sub config
 %{__aclocal} -I config -I gui/desktop
 %{__autoconf}
-QT_LIBS="-L%{_libdir} -lqt-mt"; export QT_LIBS
-QT_CFLAGS="-I%{_includedir}/qt"; export QT_CFLAGS
+export QT_LIBS="-L%{_libdir} -lqt-mt"
+export QT_CFLAGS="-I%{_includedir}/qt"
 %configure \
 	PTHREAD_LIBS="-lpthread"
 
@@ -151,12 +140,12 @@ QT_CFLAGS="-I%{_includedir}/qt"; export QT_CFLAGS
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_plugindir}
+install -d $RPM_BUILD_ROOT%{_browserpluginsdir}
 
 # pass dtop_* to allow build w/o gnome/kde/etc. installed
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	plugindir=%{_plugindir} \
+	plugindir=%{_browserpluginsdir} \
 	dtop_applications=%{_desktopdir} \
 	dtop_icons=%{_iconsdir} \
 	dtop_mimelnk=%{_datadir}/mimelnk \
@@ -171,43 +160,13 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%triggerin -n browser-plugin-%{name} -- mozilla
-%nsplugin_install -d %{_libdir}/mozilla/plugins nsdejavu.so
+%post -n browser-plugin-%{name}
+%update_browser_plugins
 
-%triggerun -n browser-plugin-%{name} -- mozilla
-%nsplugin_uninstall -d %{_libdir}/mozilla/plugins nsdejavu.so
-
-%triggerin -n browser-plugin-%{name} -- mozilla-firefox
-%nsplugin_install -d %{_libdir}/mozilla-firefox/plugins nsdejavu.so
-
-%triggerun -n browser-plugin-%{name} -- mozilla-forefox
-%nsplugin_uninstall -d %{_libdir}/mozilla-firefox/plugins nsdejavu.so
-
-%triggerin -n browser-plugin-%{name} -- mozilla-firefox-bin
-%nsplugin_install -d %{_libdir}/mozilla-firefox-bin/plugins nsdejavu.so
-
-%triggerun -n browser-plugin-%{name} -- mozilla-forefox-bin
-%nsplugin_uninstall -d %{_libdir}/mozilla-firefox-bin/plugins nsdejavu.so
-
-%triggerin -n browser-plugin-%{name} -- netscape-common
-%nsplugin_install -d %{_libdir}/netscape/plugins nsdejavu.so
-
-%triggerun -n browser-plugin-%{name} -- netscape-common
-%nsplugin_uninstall -d %{_libdir}/netscape/plugins nsdejavu.so
-
-%triggerin -n browser-plugin-%{name} -- seamonkey
-%nsplugin_install -d %{_libdir}/seamonkey/plugins nsdejavu.so
-
-%triggerun -n browser-plugin-%{name} -- seamonkey
-%nsplugin_uninstall -d %{_libdir}/seamonkey/plugins nsdejavu.so
-
-# as rpm removes the old obsoleted package files after the triggers
-# are ran, add another trigger to make the links there.
-%triggerpostun -n browser-plugin-%{name} -- mozilla-plugin-%{name}
-%nsplugin_install -f -d %{_libdir}/mozilla/plugins nsdejavu.so
-
-%triggerpostun -n browser-plugin-%{name} -- netscape-plugin-%{name}
-%nsplugin_install -f -d %{_libdir}/netscape/plugins nsdejavu.so
+%postun -n browser-plugin-%{name}
+if [ "$1" = 0 ]; then
+	%update_browser_plugins
+fi
 
 %files
 %defattr(644,root,root,755)
@@ -253,7 +212,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_plugindir}/*.so
+%attr(755,root,root) %{_browserpluginsdir}/*.so
 %{_mandir}/man1/nsdejavu.1*
 %lang(ja) %{_mandir}/ja/man1/nsdejavu.1*
 %endif
