@@ -14,6 +14,7 @@ Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
 Patch2:		%{name}-desktop.patch
+Patch3:		%{name}-link.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -21,6 +22,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
 %{?with_qt:BuildRequires:	qt-devel >= 3.0.5}
 BuildRequires:	rpmbuild(macros) >= 1.357
+%{?with_qt:BuildRequires:	xorg-lib-libXt-devel}
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
