@@ -209,9 +209,9 @@ fi
 %{_mandir}/man1/djview3.1*
 %lang(ja) %{_mandir}/ja/man1/djview.1*
 %lang(ja) %{_mandir}/ja/man1/djview3.1*
-%{_desktopdir}/djview3.desktop
-%{_iconsdir}/hicolor/*/apps/djview3.png
-%{_iconsdir}/hicolor/*/mimetypes/djvu.png
+%{_desktopdir}/djvulibre-djview3.desktop
+%{_iconsdir}/hicolor/*/apps/djvulibre-djview3.png
+%{_iconsdir}/hicolor/*/mimetypes/mime-image-vnd.djvu.png
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
