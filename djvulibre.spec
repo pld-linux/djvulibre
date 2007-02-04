@@ -1,15 +1,16 @@
+#
 # Conditional build:
 %bcond_without	qt	# disable qt wrapper
 #
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
 Name:		djvulibre
-Version:	3.5.17
-Release:	4
+Version:	3.5.18
+Release:	1
 License:	GPL
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	18e71eec1f7d59ef4710b405ea64650e
+# Source0-md5:	73fd6d4f92832b85a91529b7bb3b7710
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
 Patch2:		%{name}-desktop.patch
@@ -108,12 +109,12 @@ Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
 Requires:	browser-plugins >= 2.0
 Requires:	browser-plugins(%{_target_base_arch})
-Obsoletes:	djview-netscape
-Obsoletes:	mozilla-plugin-djvulibre
-Obsoletes:	netscape-plugin-djvulibre
 # for migrate purposes (greedy poldek upgrade)
 Provides:	mozilla-plugin-djvulibre
 Provides:	netscape-plugin-djvulibre
+Obsoletes:	djview-netscape
+Obsoletes:	mozilla-plugin-djvulibre
+Obsoletes:	netscape-plugin-djvulibre
 
 %description -n browser-plugin-%{name}
 DjVu plugin for Mozilla and Mozilla-based browsers.
@@ -129,7 +130,7 @@ Wtyczka DjVu do przegl±darek zgodnych z Mozill±.
 
 %build
 cp -f /usr/share/automake/config.sub config
-%{__aclocal} -I config -I gui/desktop
+%{__aclocal} -I config
 %{__autoconf}
 export QT_LIBS="-L%{_libdir} -lqt-mt"
 export QT_CFLAGS="-I%{_includedir}/qt"
@@ -145,14 +146,11 @@ install -d $RPM_BUILD_ROOT%{_browserpluginsdir}
 # pass dtop_* to allow build w/o gnome/kde/etc. installed
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	plugindir=%{_browserpluginsdir} \
-	dtop_applications=%{_desktopdir} \
-	dtop_icons=%{_iconsdir} \
-	dtop_mimelnk=%{_datadir}/mimelnk \
-	dtop_applnk= \
-	dtop_pixmaps=%{_pixmapsdir} \
-	dtop_mime_info= \
-	dtop_application_registry=
+	plugindir=%{_browserpluginsdir}
+
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/djview.1
+echo '.so djview3.1' > $RPM_BUILD_ROOT%{_mandir}/man1/djview.1
+echo '.so djview3.1' > $RPM_BUILD_ROOT%{_mandir}/ja/man1/djview.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -182,8 +180,8 @@ fi
 %lang(ja) %{_mandir}/ja/man1/d[!j]*
 %lang(ja) %{_mandir}/ja/man1/djv[!i]*
 %dir %{_datadir}/djvu
-%{_datadir}/djvu/languages.xml
 %dir %{_datadir}/djvu/osi
+%{_datadir}/djvu/osi/languages.xml
 %lang(de) %{_datadir}/djvu/osi/de
 %{_datadir}/djvu/osi/en
 %lang(fr) %{_datadir}/djvu/osi/fr
@@ -196,23 +194,28 @@ fi
 %attr(755,root,root) %{_libdir}/libdjvulibre.so
 %{_libdir}/libdjvulibre.la
 %{_includedir}/libdjvu
-%{_pkgconfigdir}/*.pc
+%{_pkgconfigdir}/ddjvuapi.pc
 
 %if %{with qt}
 %files djview
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/djview
+%attr(755,root,root) %{_bindir}/djview3
+%dir %{_datadir}/djvu/djview3
+%lang(de) %{_datadir}/djvu/djview3/de
+%lang(fr) %{_datadir}/djvu/djview3/fr
+%lang(ja) %{_datadir}/djvu/djview3/ja
 %{_mandir}/man1/djview.1*
+%{_mandir}/man1/djview3.1*
 %lang(ja) %{_mandir}/ja/man1/djview.1*
-# don't include here - conflicts with kdelibs
-# %{_datadir}/mimelnk/image/x-djvu.desktop
-%{_desktopdir}/djview.desktop
+%lang(ja) %{_mandir}/ja/man1/djview3.1*
+%{_desktopdir}/djview3.desktop
+%{_iconsdir}/hicolor/*/apps/djview3.png
 %{_iconsdir}/hicolor/*/mimetypes/djvu.png
-%{_pixmapsdir}/djvu.png
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_browserpluginsdir}/*.so
+%attr(755,root,root) %{_browserpluginsdir}/nsdejavu.so
 %{_mandir}/man1/nsdejavu.1*
 %lang(ja) %{_mandir}/ja/man1/nsdejavu.1*
 %endif
