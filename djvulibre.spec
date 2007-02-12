@@ -3,7 +3,7 @@
 %bcond_without	qt	# disable qt wrapper
 #
 Summary:	DjVu viewers, encoders and utilities
-Summary(pl.UTF-8):   DjVu - przeglądarki, dekodery oraz narzędzia
+Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
 Version:	3.5.18
 Release:	1
@@ -79,7 +79,7 @@ przeglądarek znajdują się w innych podpakietach.
 
 %package devel
 Summary:	Header file for DjVu library
-Summary(pl.UTF-8):   Plik nagłówkowy biblioteki DjVu
+Summary(pl.UTF-8):	Plik nagłówkowy biblioteki DjVu
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libjpeg-devel
@@ -93,7 +93,7 @@ Plik nagłówkowy biblioteki DjVu.
 
 %package djview
 Summary:	Qt-based DjVu viewer
-Summary(pl.UTF-8):   Oparta o Qt przeglądarka DjVu
+Summary(pl.UTF-8):	Oparta o Qt przeglądarka DjVu
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	djview
@@ -106,7 +106,7 @@ Oparta o Qt przeglądarka DjVu.
 
 %package -n browser-plugin-%{name}
 Summary:	DjVu browser plugin
-Summary(pl.UTF-8):   Wtyczka DjVu do przegląderek WWW
+Summary(pl.UTF-8):	Wtyczka DjVu do przegląderek WWW
 Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
 Requires:	browser-plugins >= 2.0
