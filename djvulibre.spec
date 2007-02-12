@@ -3,7 +3,7 @@
 %bcond_without	qt	# disable qt wrapper
 #
 Summary:	DjVu viewers, encoders and utilities
-Summary(pl):	DjVu - przegl±darki, dekodery oraz narzêdzia
+Summary(pl.UTF-8):   DjVu - przeglÄ…darki, dekodery oraz narzÄ™dzia
 Name:		djvulibre
 Version:	3.5.18
 Release:	1
@@ -56,30 +56,30 @@ Following elements are placed in other subpackages:
 - a standalone DjVu viewer based on the Qt library.
 - A browser plugin that works with most Unix browsers.
 
-%description -l pl
-DjVu jest przeznaczonym g³ównie dla WWW formatem i platform±
-programow± do dystrybucji dokumentów i obrazków. Dane w DjVu ¶ci±gaj±
-siê szybciej, wy¶wietlaj± szybciej, wygl±daj± ³adniej na ekranie i
-zajmuj± mniej zasobów po stronie klienckiej ni¿ inne formaty. DjVu
-oryginalnie zosta³ stworzony w AT&T Labs-Research przez Leona Bottou,
+%description -l pl.UTF-8
+DjVu jest przeznaczonym gÅ‚Ã³wnie dla WWW formatem i platformÄ…
+programowÄ… do dystrybucji dokumentÃ³w i obrazkÃ³w. Dane w DjVu Å›ciÄ…gajÄ…
+siÄ™ szybciej, wyÅ›wietlajÄ… szybciej, wyglÄ…dajÄ… Å‚adniej na ekranie i
+zajmujÄ… mniej zasobÃ³w po stronie klienckiej niÅ¼ inne formaty. DjVu
+oryginalnie zostaÅ‚ stworzony w AT&T Labs-Research przez Leona Bottou,
 Yanna LeCun, Patricka Haffnera i wielu innych. W marcu 2000 AT&T
-sprzeda³o DjVu firmie LizardTech Inc., które teraz rozpowszechnia
-wtyczki dla Windows i Maca oraz komercyjne kodery (g³ównie dla
+sprzedaÅ‚o DjVu firmie LizardTech Inc., ktÃ³re teraz rozpowszechnia
+wtyczki dla Windows i Maca oraz komercyjne kodery (gÅ‚Ã³wnie dla
 Windows).
 
-Aby wypromowaæ DjVu jako sieciowy standard, LizardTech udostêpni³
-wzorcow± implementacjê DjVu na licencji GPL w pa¼dzierniku 2000.
-DjVuLibre (czyli wolne DjVu) jest rozszerzon± wersj± tego kodu
-rozwijan± przez pomys³odawców DjVu. Jest kompatybilna z wersj± 3.5
+Aby wypromowaÄ‡ DjVu jako sieciowy standard, LizardTech udostÄ™pniÅ‚
+wzorcowÄ… implementacjÄ™ DjVu na licencji GPL w paÅºdzierniku 2000.
+DjVuLibre (czyli wolne DjVu) jest rozszerzonÄ… wersjÄ… tego kodu
+rozwijanÄ… przez pomysÅ‚odawcÃ³w DjVu. Jest kompatybilna z wersjÄ… 3.5
 oprogramowania LizardTech DjVu.
 
-Ten pakiet zawiera: bibliotekê w C++, zestaw kompresorów, dekoderów i
-narzêdzi do plików w formacie DjVu. Przegl±darka oraz wtyczki do
-przegl±darek znajduj± siê w innych podpakietach.
+Ten pakiet zawiera: bibliotekÄ™ w C++, zestaw kompresorÃ³w, dekoderÃ³w i
+narzÄ™dzi do plikÃ³w w formacie DjVu. PrzeglÄ…darka oraz wtyczki do
+przeglÄ…darek znajdujÄ… siÄ™ w innych podpakietach.
 
 %package devel
 Summary:	Header file for DjVu library
-Summary(pl):	Plik nag³ówkowy biblioteki DjVu
+Summary(pl.UTF-8):   Plik nagÅ‚Ã³wkowy biblioteki DjVu
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libjpeg-devel
@@ -88,12 +88,12 @@ Requires:	libstdc++-devel
 %description devel
 Header file for DjVu library.
 
-%description devel -l pl
-Plik nag³ówkowy biblioteki DjVu.
+%description devel -l pl.UTF-8
+Plik nagÅ‚Ã³wkowy biblioteki DjVu.
 
 %package djview
 Summary:	Qt-based DjVu viewer
-Summary(pl):	Oparta o Qt przegl±darka DjVu
+Summary(pl.UTF-8):   Oparta o Qt przeglÄ…darka DjVu
 Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	djview
@@ -101,12 +101,12 @@ Obsoletes:	djview
 %description djview
 Qt-based DjVu viewer.
 
-%description djview -l pl
-Oparta o Qt przegl±darka DjVu.
+%description djview -l pl.UTF-8
+Oparta o Qt przeglÄ…darka DjVu.
 
 %package -n browser-plugin-%{name}
 Summary:	DjVu browser plugin
-Summary(pl):	Wtyczka DjVu do przegl±derek WWW
+Summary(pl.UTF-8):   Wtyczka DjVu do przeglÄ…derek WWW
 Group:		X11/Libraries
 Requires:	%{name}-djview = %{version}-%{release}
 Requires:	browser-plugins >= 2.0
@@ -121,8 +121,8 @@ Obsoletes:	netscape-plugin-djvulibre
 %description -n browser-plugin-%{name}
 DjVu plugin for Mozilla and Mozilla-based browsers.
 
-%description -n browser-plugin-%{name} -l pl
-Wtyczka DjVu do przegl±darek zgodnych z Mozill±.
+%description -n browser-plugin-%{name} -l pl.UTF-8
+Wtyczka DjVu do przeglÄ…darek zgodnych z MozillÄ….
 
 %prep
 %setup -q
