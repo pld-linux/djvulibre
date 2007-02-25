@@ -5,7 +5,7 @@
  CFLAGS = @CPPFLAGS@ ${DEFS} ${OPTS} ${INCS} ${NSDEJAVU_CFLAGS} 
  
 -LIBS = @LDFLAGS@ ${NSDEJAVU_LIBS} 
-+LIBS = @LDFLAGS@ ${NSDEJAVU_LIBS} -lXt -lX11
++LIBS = @LDFLAGS@ ${NSDEJAVU_LIBS} -L/usr/X11R6/@lib@ -lXt -lX11
  
  all: nsdejavu.la nsdejavu.x nsdejavu.1
  
