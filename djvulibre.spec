@@ -20,7 +20,7 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
-%{?with_qt:BuildRequires:	qt-devel >= 3.0.5}
+%{?with_qt:BuildRequires:	qt-devel >= 3:3.0.5}
 BuildRequires:	rpmbuild(macros) >= 1.357
 %{?with_qt:BuildRequires:	xorg-lib-libXt-devel}
 Obsoletes:	djvu
