@@ -5,12 +5,12 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
-Version:	3.5.18
+Version:	3.5.19
 Release:	1
-License:	GPL
+License:	GPL v2+
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	73fd6d4f92832b85a91529b7bb3b7710
+# Source0-md5:	0330d87ad337e408e21e1018eb511839
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-nostrip.patch
 Patch2:		%{name}-desktop.patch
