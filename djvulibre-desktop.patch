@@ -11,9 +11,9 @@
  Name=DjView3
  Exec=djview3 %f
  Terminal=false
---- djvulibre-3.5.18/desktopfiles/Makefile.in.orig	2007-01-14 19:26:33.000000000 +0100
-+++ djvulibre-3.5.18/desktopfiles/Makefile.in	2007-02-04 21:42:41.916239023 +0100
-@@ -37,6 +37,9 @@
+--- djvulibre-3.5.19/desktopfiles/Makefile.in.orig	2007-03-25 22:48:22.000000000 +0200
++++ djvulibre-3.5.19/desktopfiles/Makefile.in	2007-08-30 18:58:54.537469369 +0200
+@@ -38,6 +38,9 @@
  datadir_djvu = ${datadir}/djvu/osi/desktop
  datadir_djview = ${datadir}/djvu/djview3/desktop
  
@@ -23,14 +23,16 @@
  
  # -------- all
  
-@@ -81,16 +84,16 @@
- @GUI_YES@echo-xdg: echo-djview-xdg
+@@ -70,20 +73,16 @@
+ @GUI_YES@install: install-djview-files
  
  install-djvu-files: FORCE
 -	${INSTALL} -d ${DESTDIR}${datadir_djvu}
 -	${INSTALL_PROGRAM} register-djvu-mime ${DESTDIR}${datadir_djvu}
 -	${INSTALL_DATA} ${srcdir}/*djvu.png ${DESTDIR}${datadir_djvu}
 -	${INSTALL_DATA} ${srcdir}/*mime.xml ${DESTDIR}${datadir_djvu}
+-	-@echo "Run ${datadir_djvu}/register-djvu-mime install"
+-	-@echo " to register the djvu mime types and icons."
 +	${INSTALL} -d ${DESTDIR}${mimedir}/packages ${DESTDIR}${iconsdir}/hicolor/{22x22,32x32,48x48}/{mimetypes,apps}
 +	${INSTALL_DATA} ${srcdir}/hi22-djvu.png ${DESTDIR}${iconsdir}/hicolor/22x22/mimetypes/mime-image-vnd.djvu.png
 +	${INSTALL_DATA} ${srcdir}/hi32-djvu.png ${DESTDIR}${iconsdir}/hicolor/32x32/mimetypes/mime-image-vnd.djvu.png
@@ -42,9 +44,11 @@
 -	${INSTALL_PROGRAM} register-djview-menu ${DESTDIR}${datadir_djview}
 -	${INSTALL_DATA} ${srcdir}/*djview3.png ${DESTDIR}${datadir_djview}
 -	${INSTALL_DATA} ${srcdir}/*djview3.desktop ${DESTDIR}${datadir_djview}
+-	-@echo "Run ${datadir_djview}/register-djview-menu install"
+-	-@echo " to register the djview3 menu entries."
 +	${INSTALL} -d ${DESTDIR}${desktopdir} ${DESTDIR}${iconsdir}/hicolor/{22x22,32x32,48x48}/{mimetypes,apps}
 +	${INSTALL_DATA} ${srcdir}/hi32-djview3.png ${DESTDIR}${iconsdir}/hicolor/32x32/apps/djvulibre-djview3.png
 +	${INSTALL_DATA} ${srcdir}/djvulibre-djview3.desktop ${DESTDIR}${desktopdir}/djvulibre-djview3.desktop
  
- run-djvu-xdg: FORCE
- 	-test -z "${DESTDIR}" && \
+ 
+ # -------- misc
