@@ -184,7 +184,7 @@ fi
 %dir %{_datadir}/djvu
 %dir %{_datadir}/djvu/osi
 %{_datadir}/djvu/osi/languages.xml
-%lang(de) %{_datadir}/djvu/osi/cs
+%lang(cs) %{_datadir}/djvu/osi/cs
 %lang(de) %{_datadir}/djvu/osi/de
 %{_datadir}/djvu/osi/en
 %lang(fr) %{_datadir}/djvu/osi/fr
