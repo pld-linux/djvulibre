@@ -1,16 +1,14 @@
 --- djvulibre-3.5.18/desktopfiles/djvulibre-djview3.desktop.orig	2007-01-15 05:19:46.000000000 +0100
 +++ djvulibre-3.5.18/desktopfiles/djvulibre-djview3.desktop	2007-02-04 21:06:05.879093998 +0100
-@@ -1,8 +1,8 @@
+@@ -1,7 +1,7 @@
  [Desktop Entry]
  Encoding=UTF-8
  Type=Application
 -Categories=Qt;Graphics
--MimeType=image/x-djvu;image/x.djvu;image/vnd.djvu
 +Categories=Qt;Graphics;Viewer;
-+MimeType=image/x-djvu;image/x.djvu;image/vnd.djvu;
+ MimeType=image/x-djvu;image/x.djvu;image/vnd.djvu;
  Name=DjView3
  Exec=djview3 %f
- Terminal=false
 --- djvulibre-3.5.19/desktopfiles/Makefile.in.orig	2007-03-25 22:48:22.000000000 +0200
 +++ djvulibre-3.5.19/desktopfiles/Makefile.in	2007-08-30 18:58:54.537469369 +0200
 @@ -38,6 +38,9 @@
