@@ -1,3 +1,4 @@
+# TODO: use system qt qt.qm files instead of included copies
 #
 # Conditional build:
 %bcond_without	qt	# disable qt wrapper
@@ -175,6 +176,7 @@ fi
 %attr(755,root,root) %{_bindir}/d[!j]*
 %attr(755,root,root) %{_bindir}/djv[!i]*
 %attr(755,root,root) %{_libdir}/libdjvulibre.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libdjvulibre.so.15
 %{_mandir}/man1/[!dn]*
 %{_mandir}/man1/d[!j]*
 %{_mandir}/man1/djv[!i]*
@@ -205,6 +207,7 @@ fi
 %attr(755,root,root) %{_bindir}/djview
 %attr(755,root,root) %{_bindir}/djview3
 %dir %{_datadir}/djvu/djview3
+%lang(cs) %{_datadir}/djvu/djview3/cs
 %lang(de) %{_datadir}/djvu/djview3/de
 %lang(fr) %{_datadir}/djvu/djview3/fr
 %lang(ja) %{_datadir}/djvu/djview3/ja
