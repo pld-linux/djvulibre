@@ -141,7 +141,7 @@ export QT_CFLAGS="-I%{_includedir}/qt"
 %configure \
 	PTHREAD_LIBS="-lpthread"
 
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
