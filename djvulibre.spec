@@ -6,16 +6,15 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
-Version:	3.5.20
-Release:	3
+Version:	3.5.22
+Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	c94091de014b3aaf037d3d0f398d36c2
+# Source0-md5:	d1513784ce0e4f37d71595dc34c95ec7
 Patch0:		%{name}-opt.patch
-Patch1:		%{name}-nostrip.patch
-Patch2:		%{name}-desktop.patch
-Patch3:		%{name}-link.patch
+Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-link.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -130,7 +129,6 @@ Wtyczka DjVu do przeglądarek zgodnych z Mozillą.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config
@@ -176,7 +174,7 @@ fi
 %attr(755,root,root) %{_bindir}/d[!j]*
 %attr(755,root,root) %{_bindir}/djv[!i]*
 %attr(755,root,root) %{_libdir}/libdjvulibre.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdjvulibre.so.15
+%attr(755,root,root) %ghost %{_libdir}/libdjvulibre.so.21
 %{_mandir}/man1/[!dn]*
 %{_mandir}/man1/d[!j]*
 %{_mandir}/man1/djv[!i]*
