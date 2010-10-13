@@ -6,12 +6,12 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
-Version:	3.5.22
+Version:	3.5.23
 Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
-Source0:	http://dl.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	d1513784ce0e4f37d71595dc34c95ec7
+Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
+# Source0-md5:	0053b9908b9e3d57d0d89b3d065168e9
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-link.patch
@@ -140,7 +140,8 @@ cp -f /usr/share/automake/config.sub config
 export QT_LIBS="-L%{_libdir} -lqt-mt"
 export QT_CFLAGS="-I%{_includedir}/qt"
 %configure \
-	PTHREAD_LIBS="-lpthread"
+	PTHREAD_LIBS="-lpthread" \
+	--enable-djview
 
 %{__make} -j1
 
@@ -173,17 +174,37 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc COPYRIGHT NEWS README TODO doc/*
-%attr(755,root,root) %{_bindir}/[!d]*
-%attr(755,root,root) %{_bindir}/d[!j]*
-%attr(755,root,root) %{_bindir}/djv[!i]*
+%attr(755,root,root) %{_bindir}/any2djvu
+%attr(755,root,root) %{_bindir}/bzz
+%attr(755,root,root) %{_bindir}/c44
+%attr(755,root,root) %{_bindir}/cjb2
+%attr(755,root,root) %{_bindir}/cpaldjvu
+%attr(755,root,root) %{_bindir}/csepdjvu
+%attr(755,root,root) %{_bindir}/ddjvu
+%attr(755,root,root) %{_bindir}/djvm
+%attr(755,root,root) %{_bindir}/djvmcvt
+%attr(755,root,root) %{_bindir}/djvu*
 %attr(755,root,root) %{_libdir}/libdjvulibre.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libdjvulibre.so.21
-%{_mandir}/man1/[!dn]*
-%{_mandir}/man1/d[!j]*
-%{_mandir}/man1/djv[!i]*
-%lang(ja) %{_mandir}/ja/man1/[!dn]*
-%lang(ja) %{_mandir}/ja/man1/d[!j]*
-%lang(ja) %{_mandir}/ja/man1/djv[!i]*
+%{_mandir}/man1/any2djvu.1*
+%{_mandir}/man1/bzz.1*
+%{_mandir}/man1/c44.1*
+%{_mandir}/man1/cjb2.1*
+%{_mandir}/man1/cpaldjvu.1*
+%{_mandir}/man1/csepdjvu.1*
+%{_mandir}/man1/ddjvu.1*
+%{_mandir}/man1/djvm.1*
+%{_mandir}/man1/djvmcvt.1*
+%{_mandir}/man1/djvu*.1*
+%lang(ja) %{_mandir}/ja/man1/bzz.1*
+%lang(ja) %{_mandir}/ja/man1/c44.1*
+%lang(ja) %{_mandir}/ja/man1/cjb2.1*
+%lang(ja) %{_mandir}/ja/man1/cpaldjvu.1*
+%lang(ja) %{_mandir}/ja/man1/csepdjvu.1*
+%lang(ja) %{_mandir}/ja/man1/ddjvu.1*
+%lang(ja) %{_mandir}/ja/man1/djvm.1*
+%lang(ja) %{_mandir}/ja/man1/djvmcvt.1*
+%lang(ja) %{_mandir}/ja/man1/djvu*.1*
 %dir %{_datadir}/djvu
 %dir %{_datadir}/djvu/osi
 %{_datadir}/djvu/osi/languages.xml
