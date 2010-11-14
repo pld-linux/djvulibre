@@ -9,3 +9,14 @@
  
  all: nsdejavu.la nsdejavu.x nsdejavu.1
  
+--- djvulibre-3.5.23/gui/nsdejavu/Makefile.in~	2010-11-14 16:42:34.754225193 +0100
++++ djvulibre-3.5.23/gui/nsdejavu/Makefile.in	2010-11-14 16:42:44.722533345 +0100
+@@ -62,7 +62,7 @@
+ 
+ nsdejavu.la: nsdejavu.lo
+ 	${LIBTOOL} --mode=link ${CC} ${CFLAGS} nsdejavu.lo ${LIBS} \
+-	  -rpath ${plugindir} -module -o $@
++	  -rpath ${plugindir} -module -avoid-version -o $@
+ 
+ nsdejavu.x: nsdejavu.la FORCE
+ 	eval `grep '^dlname=' nsdejavu.la` && \
