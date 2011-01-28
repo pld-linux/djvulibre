@@ -20,6 +20,7 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	pkgconfig
 %if %{with qt}
 BuildRequires:	qt-devel >= 3:3.0.5
 BuildRequires:	qt-linguist
