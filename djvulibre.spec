@@ -7,7 +7,7 @@ Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
 Version:	3.5.24
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/Graphics
 Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
@@ -15,6 +15,7 @@ Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-link.patch
+Patch3:		djvulibre-3.5.22-cdefs.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -133,6 +134,7 @@ Wtyczka DjVu do przeglądarek zgodnych z Mozillą.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config
