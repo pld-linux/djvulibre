@@ -1,33 +1,27 @@
 # TODO: use system qt qt.qm files instead of included copies
 #
 # Conditional build:
-%bcond_without	qt	# disable qt wrapper
+%define		base_ver	3.5.25
+%define		minor_ver	.3
 #
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
-Version:	3.5.24
-Release:	3
+Version:	%{base_ver}%{minor_ver}
+Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	af83d27af5083198432a178d22b259c5
+# Source0-md5:	5f45d6cd5700b4dd31b1eb963482089b
 Patch0:		%{name}-opt.patch
-Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-link.patch
-Patch3:		djvulibre-3.5.22-cdefs.patch
+Patch1:		djvulibre-3.5.22-cdefs.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
-%if %{with qt}
-BuildRequires:	qt-devel >= 3:3.0.5
-BuildRequires:	qt-linguist
-%endif
 BuildRequires:	rpmbuild(macros) >= 1.357
-%{?with_qt:BuildRequires:	xorg-lib-libXt-devel}
 Obsoletes:	djvu
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -57,10 +51,6 @@ This package of DjVulibre 3.5 contains:
 - A set of decoders to convert DjVu to a number of other formats.
 - An up-to-date version of the C++ DjVu Reference Library.
 
-Following elements are placed in other subpackages:
-- a standalone DjVu viewer based on the Qt library.
-- A browser plugin that works with most Unix browsers.
-
 %description -l pl.UTF-8
 DjVu jest przeznaczonym głównie dla WWW formatem i platformą
 programową do dystrybucji dokumentów i obrazków. Dane w DjVu ściągają
@@ -79,8 +69,7 @@ rozwijaną przez pomysłodawców DjVu. Jest kompatybilna z wersją 3.5
 oprogramowania LizardTech DjVu.
 
 Ten pakiet zawiera: bibliotekę w C++, zestaw kompresorów, dekoderów i
-narzędzi do plików w formacie DjVu. Przeglądarka oraz wtyczki do
-przeglądarek znajdują się w innych podpakietach.
+narzędzi do plików w formacie DjV
 
 %package devel
 Summary:	Header file for DjVu library
@@ -96,55 +85,18 @@ Header file for DjVu library.
 %description devel -l pl.UTF-8
 Plik nagłówkowy biblioteki DjVu.
 
-%package djview
-Summary:	Qt-based DjVu viewer
-Summary(pl.UTF-8):	Oparta o Qt przeglądarka DjVu
-Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
-Obsoletes:	djview
-
-%description djview
-Qt-based DjVu viewer.
-
-%description djview -l pl.UTF-8
-Oparta o Qt przeglądarka DjVu.
-
-%package -n browser-plugin-%{name}
-Summary:	DjVu browser plugin
-Summary(pl.UTF-8):	Wtyczka DjVu do przegląderek WWW
-Group:		X11/Libraries
-Requires:	%{name}-djview = %{version}-%{release}
-Requires:	browser-plugins >= 2.0
-Requires:	browser-plugins(%{_target_base_arch})
-# for migrate purposes (greedy poldek upgrade)
-Provides:	mozilla-plugin-djvulibre
-Provides:	netscape-plugin-djvulibre
-Obsoletes:	djview-netscape
-Obsoletes:	mozilla-plugin-djvulibre
-Obsoletes:	netscape-plugin-djvulibre
-
-%description -n browser-plugin-%{name}
-DjVu plugin for Mozilla and Mozilla-based browsers.
-
-%description -n browser-plugin-%{name} -l pl.UTF-8
-Wtyczka DjVu do przeglądarek zgodnych z Mozillą.
-
 %prep
-%setup -q
+%setup -q -n %{name}-%{base_ver}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub config
 %{__aclocal} -I config
 %{__autoconf}
-export QT_LIBS="-L%{_libdir} -lqt-mt"
-export QT_CFLAGS="-I%{_includedir}/qt"
 %configure \
 	PTHREAD_LIBS="-lpthread" \
-	--enable-djview
+	--disable-desktopfiles
 
 %{__make} -j1
 
@@ -156,27 +108,15 @@ install -d $RPM_BUILD_ROOT%{_browserpluginsdir}
 	DESTDIR=$RPM_BUILD_ROOT \
 	plugindir=%{_browserpluginsdir}
 
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/djview.1
-echo '.so djview3.1' > $RPM_BUILD_ROOT%{_mandir}/man1/djview.1
-echo '.so djview3.1' > $RPM_BUILD_ROOT%{_mandir}/ja/man1/djview.1
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%post -n browser-plugin-%{name}
-%update_browser_plugins
-
-%postun -n browser-plugin-%{name}
-if [ "$1" = 0 ]; then
-	%update_browser_plugins
-fi
-
 %files
 %defattr(644,root,root,755)
-%doc COPYRIGHT NEWS README TODO doc/*
+%doc COPYRIGHT NEWS README doc/*
 %attr(755,root,root) %{_bindir}/any2djvu
 %attr(755,root,root) %{_bindir}/bzz
 %attr(755,root,root) %{_bindir}/c44
@@ -199,15 +139,6 @@ fi
 %{_mandir}/man1/djvm.1*
 %{_mandir}/man1/djvmcvt.1*
 %{_mandir}/man1/djvu*.1*
-%lang(ja) %{_mandir}/ja/man1/bzz.1*
-%lang(ja) %{_mandir}/ja/man1/c44.1*
-%lang(ja) %{_mandir}/ja/man1/cjb2.1*
-%lang(ja) %{_mandir}/ja/man1/cpaldjvu.1*
-%lang(ja) %{_mandir}/ja/man1/csepdjvu.1*
-%lang(ja) %{_mandir}/ja/man1/ddjvu.1*
-%lang(ja) %{_mandir}/ja/man1/djvm.1*
-%lang(ja) %{_mandir}/ja/man1/djvmcvt.1*
-%lang(ja) %{_mandir}/ja/man1/djvu*.1*
 %dir %{_datadir}/djvu
 %dir %{_datadir}/djvu/osi
 %{_datadir}/djvu/osi/languages.xml
@@ -225,28 +156,3 @@ fi
 %{_libdir}/libdjvulibre.la
 %{_includedir}/libdjvu
 %{_pkgconfigdir}/ddjvuapi.pc
-
-%if %{with qt}
-%files djview
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/djview
-%attr(755,root,root) %{_bindir}/djview3
-%dir %{_datadir}/djvu/djview3
-%lang(cs) %{_datadir}/djvu/djview3/cs
-%lang(de) %{_datadir}/djvu/djview3/de
-%lang(fr) %{_datadir}/djvu/djview3/fr
-%lang(ja) %{_datadir}/djvu/djview3/ja
-%{_mandir}/man1/djview.1*
-%{_mandir}/man1/djview3.1*
-%lang(ja) %{_mandir}/ja/man1/djview.1*
-%lang(ja) %{_mandir}/ja/man1/djview3.1*
-%{_desktopdir}/djvulibre-djview3.desktop
-%{_iconsdir}/hicolor/*/apps/djvulibre-djview3.png
-%{_iconsdir}/hicolor/*/mimetypes/mime-image-vnd.djvu.png
-
-%files -n browser-plugin-%{name}
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_browserpluginsdir}/nsdejavu.so
-%{_mandir}/man1/nsdejavu.1*
-%lang(ja) %{_mandir}/ja/man1/nsdejavu.1*
-%endif
