@@ -16,10 +16,11 @@ Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
 Patch0:		%{name}-opt.patch
 Patch1:		djvulibre-3.5.22-cdefs.patch
 URL:		http://djvu.sourceforge.net/
-BuildRequires:	autoconf >= 2.50
+BuildRequires:	autoconf >= 2.65
 BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool >= 2:2
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
 Obsoletes:	djvu
@@ -69,21 +70,21 @@ rozwijaną przez pomysłodawców DjVu. Jest kompatybilna z wersją 3.5
 oprogramowania LizardTech DjVu.
 
 Ten pakiet zawiera: bibliotekę w C++, zestaw kompresorów, dekoderów i
-narzędzi do plików w formacie DjV
+narzędzi do plików w formacie DjVu.
 
 %package devel
-Summary:	Header file for DjVu library
-Summary(pl.UTF-8):	Plik nagłówkowy biblioteki DjVu
+Summary:	Header files for DjVu library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki DjVu
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libjpeg-devel
 Requires:	libstdc++-devel
 
 %description devel
-Header file for DjVu library.
+Header files for DjVu library.
 
 %description devel -l pl.UTF-8
-Plik nagłówkowy biblioteki DjVu.
+Pliki nagłówkowe biblioteki DjVu.
 
 %prep
 %setup -q -n %{name}-%{base_ver}
@@ -91,7 +92,7 @@ Plik nagłówkowy biblioteki DjVu.
 %patch1 -p1
 
 %build
-cp -f /usr/share/automake/config.sub config
+%{__libtoolize}
 %{__aclocal} -I config
 %{__autoconf}
 %configure \
@@ -102,11 +103,9 @@ cp -f /usr/share/automake/config.sub config
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_browserpluginsdir}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	plugindir=%{_browserpluginsdir}
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
