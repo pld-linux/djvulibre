@@ -1,50 +1,34 @@
-diff -aurN djvulibre-3.5.17.orig/config/acinclude.m4 djvulibre-3.5.17/config/acinclude.m4
---- djvulibre-3.5.17.orig/config/acinclude.m4	2006-02-22 00:16:17.000000000 +0100
-+++ djvulibre-3.5.17/config/acinclude.m4	2006-05-16 19:04:01.600526896 +0200
-@@ -79,46 +79,6 @@
+--- djvulibre-3.5.27/config/acinclude.m4.orig	2016-01-09 21:49:51.852007828 +0100
++++ djvulibre-3.5.27/config/acinclude.m4	2016-01-09 22:38:16.038552615 +0100
+@@ -90,31 +90,8 @@
          [ac_debug=$enableval],[ac_debug=no])
-    OPTS=
-    AC_SUBST(OPTS)
--   saved_CXXFLAGS="$CXXFLAGS"
--   saved_CFLAGS="$CFLAGS"
--   CXXFLAGS=
--   CFLAGS=
--   for opt in $saved_CXXFLAGS ; do
--     case $opt in
--       -g*) test $ac_debug != no && OPTS="$OPTS $opt" ;;
--       -O*) ;;
--       *) CXXFLAGS="$CXXFLAGS $opt" ;;
--     esac
--   done
--   for opt in $saved_CFLAGS ; do
--     case $opt in
--       -O*|-g*) ;;
--       *) CFLAGS="$CFLAGS $opt" ;;
--     esac
--   done
--   if test x$ac_debug = xno ; then
--     OPTS=-DNDEBUG
--     AC_CHECK_CXX_OPT([-Wall],[OPTS="$OPTS -Wall"])
--     AC_CHECK_CXX_OPT([-O3],[OPTS="$OPTS -O3"],
--        [ AC_CHECK_CXX_OPT([-O2], [OPTS="$OPTS -O2"] ) ] )
--     dnl This triggers compiler bugs with gcc-3.2.2:
--     dnl AC_CHECK_CXX_OPT([-funroll-loops], [OPTS="$OPTS -funroll-loops"])
--     dnl QT3 has plenty of this:
--     AC_CHECK_CXX_OPT([-Wno-non-virtual-dtor],[OPTS="$OPTS -Wno-non-virtual-dtor"])
+    defines=
+    if test x$ac_debug = xno ; then
+-     AC_REMOVE_OPTIONS([CFLAGS],[-O*])
+-     AC_REMOVE_OPTIONS([CXXFLAGS],[-O*])
+-     if test x$GCC != xyes ; then
+-       AC_REMOVE_OPTIONS([CFLAGS],[-g*])
+-       AC_REMOVE_OPTIONS([CXXFLAGS],[-g*])
+-     fi
+      defines="-DNDEBUG"
+-     AC_CHECK_CC_OPT([-O3],,[AC_CHECK_CC_OPT([-O2])])
+-     AC_CHECK_CXX_OPT([-O3],,[AC_CHECK_CXX_OPT([-O2])])
 -     cpu=`uname -m 2>/dev/null`
 -     test -z "$cpu" && cpu=${host_cpu}
 -     case "${host_cpu}" in
 -        i?86)
 -           opt="-mtune=${host_cpu}"
--           AC_CHECK_CXX_OPT([$opt], [OPTS="$OPTS $opt"],
--             [ opt="-mcpu=${host_cpu}"
--               AC_CHECK_CXX_OPT([$opt], [OPTS="$OPTS $opt"]) ])
+-           AC_CHECK_CXX_OPT([-mtune=${host_cpu}],,
+-                [AC_CHECK_CXX_OPT([-mcpu=${host_cpu}])])
+-           AC_CHECK_CC_OPT([-mtune=${host_cpu}],,
+-                [AC_CHECK_CC_OPT([-mcpu=${host_cpu}])])
 -           ;;
 -      esac
--   else
--     AC_CHECK_CXX_OPT([-Wall],[OPTS="$OPTS -Wall"])
--     AC_CHECK_CXX_OPT([-Wno-non-virtual-dtor],[OPTS="$OPTS -Wno-non-virtual-dtor"])
--   fi
-    case x"$ac_debug" in
- changequote(<<, >>)dnl
-      x[0-9])  OPTS="$OPTS -DDEBUGLVL=$ac_debug" ;;
+    else
+-     AC_REMOVE_OPTIONS([CFLAGS],[-O*|-g*])
+-     AC_REMOVE_OPTIONS([CXXFLAGS],[-O*|-g*])
+-     AC_CHECK_CC_OPT([-g])
+-     AC_CHECK_CXX_OPT([-g])
+      AC_CHECK_CXX_OPT([-Wno-non-virtual-dtor])
+    fi
+    AC_CHECK_CC_OPT([-Wall])

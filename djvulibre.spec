@@ -1,25 +1,21 @@
 # TODO: use system qt qt.qm files instead of included copies
-#
-# Conditional build:
-%define		base_ver	3.5.25
-%define		minor_ver	.3
-#
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
-Version:	%{base_ver}%{minor_ver}
-Release:	4
+Version:	3.5.27
+Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	5f45d6cd5700b4dd31b1eb963482089b
+# Source0-md5:	aa4ed331f669f5a72e3c0d7f9196c4e6
 Patch0:		%{name}-opt.patch
 Patch1:		djvulibre-3.5.22-cdefs.patch
 URL:		http://djvu.sourceforge.net/
 BuildRequires:	autoconf >= 2.65
-BuildRequires:	automake
+BuildRequires:	automake >= 1.6
 BuildRequires:	libjpeg-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:2
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
@@ -87,7 +83,7 @@ Header files for DjVu library.
 Pliki nagłówkowe biblioteki DjVu.
 
 %prep
-%setup -q -n %{name}-%{base_ver}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
@@ -95,9 +91,12 @@ Pliki nagłówkowe biblioteki DjVu.
 %{__libtoolize}
 %{__aclocal} -I config
 %{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	PTHREAD_LIBS="-lpthread" \
-	--disable-desktopfiles
+	--disable-desktopfiles \
+	--disable-silent-rules
 
 %{__make} -j1
 
@@ -115,7 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYRIGHT NEWS README doc/*
+%doc COPYRIGHT NEWS README doc/{*.djvu,*.txt,*.pdf}
 %attr(755,root,root) %{_bindir}/any2djvu
 %attr(755,root,root) %{_bindir}/bzz
 %attr(755,root,root) %{_bindir}/c44
