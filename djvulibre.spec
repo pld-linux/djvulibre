@@ -1,4 +1,3 @@
-# TODO: use system qt qt.qm files instead of included copies
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
