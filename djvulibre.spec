@@ -1,12 +1,12 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
-Version:	3.5.27
-Release:	2
+Version:	3.5.28
+Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	aa4ed331f669f5a72e3c0d7f9196c4e6
+# Source0-md5:	6cb8caf53634edbc91cdcf0f9108c478
 Patch0:		%{name}-opt.patch
 Patch1:		djvulibre-3.5.22-cdefs.patch
 URL:		http://djvu.sourceforge.net/
@@ -94,7 +94,6 @@ Pliki nagłówkowe biblioteki DjVu.
 %{__automake}
 %configure \
 	PTHREAD_LIBS="-lpthread" \
-	--disable-desktopfiles \
 	--disable-silent-rules
 
 %{__make} -j1
@@ -108,8 +107,13 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post
+/sbin/ldconfig
+%update_icon_cache hicolor
+
+%postun
+/sbin/ldconfig
+%update_icon_cache hicolor
 
 %files
 %defattr(644,root,root,755)
@@ -146,6 +150,8 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ja) %{_datadir}/djvu/osi/ja
 %lang(zh) %{_datadir}/djvu/osi/zh
 %{_datadir}/djvu/pubtext
+%{_iconsdir}/hicolor/*x*/mimetypes/image-vnd.djvu.png
+%{_iconsdir}/hicolor/scalable/mimetypes/image-vnd.djvu.svgz
 
 %files devel
 %defattr(644,root,root,755)
