@@ -18,7 +18,7 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:2
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.357
-Obsoletes:	djvu
+Obsoletes:	djvu < 3.0-1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
