@@ -1,15 +1,15 @@
 Summary:	DjVu viewers, encoders and utilities
 Summary(pl.UTF-8):	DjVu - przeglądarki, dekodery oraz narzędzia
 Name:		djvulibre
-Version:	3.5.29
-Release:	3
+Version:	3.5.30
+Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
-Source0:	http://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-# Source0-md5:	91403ff0055775993ca19ea9702a0613
+Source0:	https://downloads.sourceforge.net/djvu/%{name}-%{version}.tar.gz
+# Source0-md5:	18bd2ed16e66c9238fd84044d11324a6
 Patch0:		%{name}-opt.patch
 Patch1:		djvulibre-3.5.22-cdefs.patch
-URL:		http://djvu.sourceforge.net/
+URL:		https://djvu.sourceforge.net/
 BuildRequires:	autoconf >= 2.65
 BuildRequires:	automake >= 1.6
 BuildRequires:	libjpeg-devel
@@ -104,6 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libdjvulibre.la
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -128,8 +131,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/djvm
 %attr(755,root,root) %{_bindir}/djvmcvt
 %attr(755,root,root) %{_bindir}/djvu*
-%attr(755,root,root) %{_libdir}/libdjvulibre.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdjvulibre.so.21
+%{_libdir}/libdjvulibre.so.*.*.*
+%ghost %{_libdir}/libdjvulibre.so.21
 %{_mandir}/man1/any2djvu.1*
 %{_mandir}/man1/bzz.1*
 %{_mandir}/man1/c44.1*
@@ -155,7 +158,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libdjvulibre.so
-%{_libdir}/libdjvulibre.la
+%{_libdir}/libdjvulibre.so
 %{_includedir}/libdjvu
 %{_pkgconfigdir}/ddjvuapi.pc
